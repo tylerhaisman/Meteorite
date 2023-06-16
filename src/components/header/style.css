@@ -3,15 +3,3 @@
     justify-content: space-between;
     padding-top: 20px;
 }
-.header button{
-    background-color: #ffffff39;
-    border: 0;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 18px;
-    color: #fff;
-    border-radius: 50px;
-}
