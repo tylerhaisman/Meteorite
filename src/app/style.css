@@ -26,6 +26,7 @@
 }
 .home .cover .title button{
     margin-top: 60px;
+    box-shadow: 0 0 20px #11111143;
 }
 .home .cover .image {
     flex: 1;
@@ -35,6 +36,9 @@
     rotate: 20deg;
     animation: floating 3s ease-in-out infinite;
     transition: 4s;
+}
+.home .cover .image img:hover{
+    scale: 1.1;
 }
 @media(max-width: 899px){
     .home .cover .image img{
@@ -71,4 +75,16 @@
         font-size: 50px;
         line-height: 60px;
     }
+}
+
+.home .circle{
+    width: 1000px;
+    height: 1000px;
+    background-color: #924FFF;
+    border-radius: 50%;
+    position: absolute;
+    left: 0px;
+    top: -700px;
+    filter: blur(500px);
+    opacity: 0.6;
 }

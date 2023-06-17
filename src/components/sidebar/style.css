@@ -19,14 +19,13 @@
 .sidebar .item {
   padding: 20px;
   border-radius: 20px;
-  border: 1px solid #ffffff44;
   transition: 0.2s;
+  box-shadow: 0 0 10px #000;
 }
 .sidebar .item.selected{
   padding: 20px;
   border-radius: 20px;
-  background-color: #ffffff27;
-  border: 1px solid #ffffff44;
+  box-shadow: inset 0 0 10px #000;
 }
 .sidebar .item:hover{
   background-color: #ffffff13;

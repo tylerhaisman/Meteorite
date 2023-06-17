@@ -5,7 +5,8 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import "./style.css";
-import Arrow from "../../assets/images/arrow.png"
+import Arrow from "../../assets/icons/arrow3.svg"
+import Messages from "@/components/messages/Messages";
 
 const Chat = () => {
     const [width, setWidth] = useState<number>(window.innerWidth);
@@ -25,12 +26,14 @@ const Chat = () => {
 
     return (
         <div className="chat">
+            <div className="circle"></div>
             <div className="content">
                 <Toaster></Toaster>
                 <div className="page">
                     <Sidebar></Sidebar>
                     <div className="interface">
                         <div className="chatarea">
+                            <Messages></Messages>
                             <form className="messagebar" onSubmit={sendMessage}>
                                 <textarea placeholder="Start typing..."></textarea>
                                 <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>

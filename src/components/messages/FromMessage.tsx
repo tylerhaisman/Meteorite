@@ -1,10 +1,13 @@
 import React from "react";
 import Profile from "../../assets/images/profile.png"
 import Image from "next/image";
-import type { AppProps } from 'next/app'
 
-const FromMessage = ({ pageProps }: AppProps) => {
-    const lines = pageProps.message.split('\n');
+type props = {
+  message: string
+}
+
+const FromMessage = ({ message }: props) => {
+    const lines = message.split('\n');
     return (
       <div className="message from">
         <Image src={Profile} alt="Other person's profile picture" width={20} height={20}></Image>

@@ -1,4 +1,7 @@
+"use client"
+
 import "./style.css";
+import React, {useEffect} from "react";
 import Header from "../components/header/Header"
 import Image from "next/image";
 import Planet from "../assets/images/planet.png"
@@ -6,8 +9,17 @@ import Arrow from "../assets/images/arrow.png"
 import Link from "next/link";
 
 export default function Home() {
+  useEffect(() => {
+    myFirstCall();
+  }, [])
+  const myFirstCall = async () => {
+    const response = await fetch("/api");
+    
+  }
+
   return (
     <div className="home">
+      <div className="circle"></div>
       <div className="content">
         <Header></Header>
         <div className="cover">
