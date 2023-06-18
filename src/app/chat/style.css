@@ -56,7 +56,7 @@
     outline: none;
 }
 .chat .page .interface .chatarea .messagebar button{
-    background: linear-gradient(#1f1f1f, #2b4e80);
+    background: linear-gradient(#924fff9a, #2b4e80);
     height: 100%;
     transform: translateY(0);
     box-shadow: 0;

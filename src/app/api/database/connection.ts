@@ -8,8 +8,5 @@ const pool = new Pool({connectionString});
     if(error){
         return error;
     }
-    else{
-        console.log("Connected to database!");
-    }
   })
 module.exports = pool;

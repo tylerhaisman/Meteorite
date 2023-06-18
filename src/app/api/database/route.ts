@@ -5,45 +5,73 @@ import {
   findUserByEmail,
   addUser,
   userSignIn,
+  getMessages,
+  sendMessage,
 } from "./query";
 
 export async function POST(req: Request) {
   const data = await req.json();
+
   if (data.action === "createTables") {
     await createTables();
     return NextResponse.json({ message: 'Success!' }, { status: 200 });
-  } else if (data.action === "addUser") {
+  }
+
+  else if (data.action === "addUser") {
     const response = await addUser(data.email, data.password, data.username, data.firstName, data.lastName);
-    if(response == "User already exists"){
+    if (response == "User already exists") {
       return NextResponse.json({ message: 'User already exists! Please sign in.' }, { status: 400 });
     }
-    else if(response == "Username is already in use"){
+    else if (response == "Username is already in use") {
       return NextResponse.json({ message: 'Username is already in use. Please choose another username.' }, { status: 400 });
     }
-      return NextResponse.json({ message: "Registration successful."}, { status: 200 });
-  } else if (data.action === "findUserById") {
+    return NextResponse.json({ message: "Registration successful." }, { status: 200 });
+  }
+
+  else if (data.action === "findUserById") {
     const response = await findUserById(data.id);
-    if(response == null){
+    if (response == null) {
       return NextResponse.json({ message: 'No user found! Please sign up.' }, { status: 400 });
     }
-    return NextResponse.json({ message: response}, { status: 200 });
-  } else if (data.action === "findUserByEmail") {
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else if (data.action === "findUserByEmail") {
     const response = await findUserByEmail(data.email);
-    if(response == null){
+    if (response == null) {
       return NextResponse.json({ message: 'No user found! Please sign up.' }, { status: 400 });
     }
-    return NextResponse.json({ message: response}, { status: 200 });
-  } 
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
   else if (data.action === "userSignIn") {
     const response = await userSignIn(data.email, data.password);
-    if(response == "No user found"){
+    if (response == "No user found") {
       return NextResponse.json({ message: 'No user found! Please sign up.' }, { status: 400 });
     }
-    else if(response == "Incorrect password"){
+    else if (response == "Incorrect password") {
       return NextResponse.json({ message: 'Incorrect password.' }, { status: 400 });
     }
-    return NextResponse.json({ message: response}, { status: 200 });
-  } else {
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else if (data.action === "getMessages") {
+    const response = await getMessages(data.email, data.withUsername);
+    if (response == null) {
+      return NextResponse.json({ message: 'No user found! Please sign up.' }, { status: 400 });
+    }
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else if (data.action === "sendMessage") {
+    const response = await sendMessage(data.email, data.withUsername, data.message);
+    if (response == null) {
+      return NextResponse.json({ message: 'An error occured.' }, { status: 400 });
+    }
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else {
     return NextResponse.json({ message: 'Not a valid action.' }, { status: 500 });
   }
 }
