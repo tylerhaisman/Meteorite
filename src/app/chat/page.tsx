@@ -7,26 +7,33 @@ import toast, { Toaster } from "react-hot-toast";
 import "./style.css";
 import Arrow from "../../assets/icons/arrow3.svg"
 import Messages from "@/components/messages/Messages";
+import { useSession, getSession } from "next-auth/react"
+import Loader from "@/components/loader/Loader";
+import Circle from "@/components/cirlce/Circle";
+import { useRouter } from "next/navigation";
 
 const Chat = () => {
-    const [width, setWidth] = useState<number>(window.innerWidth);
+    //rendering hooks
+    const router = useRouter();
 
-    const updateDimensions = () => {
-        setWidth(window.innerWidth);
+    //checking for authentication
+    const { data: session, status } = useSession()
+    if (status === "loading") {
+      return <Loader></Loader>
     }
-    useEffect(() => {
-        window.addEventListener("resize", updateDimensions);
-        return () => window.removeEventListener("resize", updateDimensions);
-    }, []);
+    if (status === "unauthenticated") {
+        router.push("/auth/signin");
+        return
+    }
 
+    //if user is authenticated
     const sendMessage = (event: FormEvent) => {
         event.preventDefault();
         toast.success("Message sent!");
     }
-
     return (
         <div className="chat">
-            <div className="circle"></div>
+            <Circle></Circle>
             <div className="content">
                 <Toaster></Toaster>
                 <div className="page">

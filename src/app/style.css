@@ -10,6 +10,8 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
 }
 
 .home .cover .title {
@@ -27,6 +29,8 @@
 .home .cover .title button{
     margin-top: 60px;
     box-shadow: 0 0 20px #11111143;
+    position: relative;
+    z-index: 2;
 }
 .home .cover .image {
     flex: 1;
@@ -75,16 +79,4 @@
         font-size: 50px;
         line-height: 60px;
     }
-}
-
-.home .circle{
-    width: 1000px;
-    height: 1000px;
-    background-color: #924FFF;
-    border-radius: 50%;
-    position: absolute;
-    left: 0px;
-    top: -700px;
-    filter: blur(500px);
-    opacity: 0.6;
 }

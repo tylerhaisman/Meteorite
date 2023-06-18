@@ -1,0 +1,11 @@
+.circle{
+    width: 1000px;
+    height: 1000px;
+    background-color: #924FFF;
+    border-radius: 50%;
+    position: absolute;
+    left: 0px;
+    top: -700px;
+    filter: blur(500px);
+    opacity: 0.6;
+}

@@ -1,0 +1,63 @@
+.auth {
+    background: linear-gradient(#1f1f1f, #2b4e8052);
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.auth .content {
+    position: relative;
+    z-index: 1;
+}
+
+.auth .logo {
+    margin-top: 20px;
+}
+
+.auth .authcontent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth .authcontent .box {
+    background-color: #ffffff12;
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+
+.auth .authcontent .box form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.auth .authcontent .box input {
+    padding: 15px;
+    border-radius: 20px;
+    border: 0;
+    font-family: p;
+    font-size: 18px;
+}
+
+.auth .authcontent .box button {
+    padding: 15px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.auth .authcontent .box h1 {
+    margin-bottom: 20px;
+}
+
+.auth .authcontent .box a {
+    text-decoration: underline;
+}
+
+.auth .authcontent .box .name {
+    display: flex;
+    gap: 10px;
+}
