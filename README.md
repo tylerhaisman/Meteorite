@@ -3,6 +3,10 @@ Created by [Tyler Haisman](https://tylerhaisman.com)
 Note: This project is a work in progress and some features may be unavailable. Please [contact me](https://tylerhaisman.com) if you have any inquiries or requests.
 ## What is this project?
 Meteorite Messenger is an instant messaging platform designed to connect you with your peers with few in-between steps. It was developed using Next.js in React. This project is developed using TypeScript.
+## Project Features
+* Full user authentication and authorization
+* End-to-end message encryption
+* "Unread" indicator on all recent contacts where messages have not yet been read
 ## How to use Meteorite Messenger
 1. First, click on the "Get Started with Meteorite" button.
 2. Create an account and sign in.
