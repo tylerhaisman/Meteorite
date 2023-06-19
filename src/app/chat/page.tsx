@@ -6,6 +6,7 @@ import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import "./style.css";
 import Arrow from "../../assets/icons/arrow3.svg"
+import Arrow2 from "../../assets/icons/arrow4.svg"
 // import Messages from "@/components/messages/Messages";
 import { useSession, getSession } from "next-auth/react"
 import Loader from "@/components/loader/Loader";
@@ -41,16 +42,18 @@ const Chat = () => {
     // };
 
     const handleSendMessage = async () => {
-        const loadingToast = toast.loading("Sending...");
-        try {
-          await sendMessage();
-          setMessage("");
-          toast.success('Message sent!', { id: loadingToast });
-        } catch (error) {
-          toast.error('Failed to send message', { id: loadingToast });
+        if (message != "") {
+            const loadingToast = toast.loading("Sending...");
+            try {
+                await sendMessage();
+                setMessage("");
+                toast.success('Message sent!', { id: loadingToast });
+            } catch (error) {
+                toast.error('Failed to send message', { id: loadingToast });
+            }
         }
-      };
-      
+    };
+
 
     const handleFormSubmit = async (event: FormEvent) => {
         event.preventDefault();
@@ -64,27 +67,25 @@ const Chat = () => {
     }
 
     const sendMessage = async () => {
-        if (message != "") {
-            try {
-                const response = await fetch('/api/database', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: "sendMessage",
-                        email: session?.user?.email,
-                        withUsername: withUsername,
-                        message,
-                    }),
-                });
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error(error);
-                toast.error("An error occured.");
-                throw error;
-            }
+        try {
+            const response = await fetch('/api/database', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: "sendMessage",
+                    email: session?.user?.email,
+                    withUsername: withUsername,
+                    message,
+                }),
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occured.");
+            throw error;
         }
     }
     const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -215,32 +216,24 @@ const Chat = () => {
         setAllUsernames(usernames.message);
     };
 
-    // const startPolling = () => {
-    //     if (pollingIntervalId) {
-    //         clearInterval(pollingIntervalId);
-    //     }
-    //     const intervalId = setInterval(pollForNewMessages, 1000);
-    //     setPollingIntervalId(intervalId);
-    // };
-
     const startPolling = () => {
         if (pollingIntervalId) {
-          clearInterval(pollingIntervalId);
+            clearInterval(pollingIntervalId);
         }
-      
+
         // Show loading toast
         const loadingToast = toast.loading("Loading messages...");
-      
+
         const intervalId = setInterval(async () => {
-          await pollForNewMessages();
-      
-          // Remove loading toast after messages are updated
-          toast.dismiss(loadingToast);
+            await pollForNewMessages();
+
+            // Remove loading toast after messages are updated
+            toast.dismiss(loadingToast);
         }, 1000);
-      
+
         setPollingIntervalId(intervalId);
-      };
-      
+    };
+
 
     const stopPolling = () => {
         if (pollingIntervalId) {
@@ -268,12 +261,14 @@ const Chat = () => {
 
     const handleSearchSubmit = (event: FormEvent) => {
         event.preventDefault();
-        const exists = allUsernames.some((obj) => obj.username === searchValue);
-        if (!exists) {
-            toast.error("No username exists!");
-        } else {
-            setWithUsername(searchValue);
-            setSearchValue("");
+        if (searchValue != "") {
+            const exists = allUsernames.some((obj) => obj.username === searchValue);
+            if (!exists) {
+                toast.error("No username exists!");
+            } else {
+                setWithUsername(searchValue);
+                setSearchValue("");
+            }
         }
     };
 
@@ -318,7 +313,27 @@ const Chat = () => {
                     <Sidebar></Sidebar>
                     <div className="board">
                         <div className="interface">
-                            <div className="chatarea">
+                            {withUsername != "" && sortedMessages.length == 0 && currentUsername == withUsername && <div className="chatarea">
+                                <div className="nocontact">
+                                    <h1 className="quiet">Welcome to your workspace.</h1>
+                                    <p>This place is all yours.</p>
+                                </div>
+                                <form className="messagebar" onSubmit={handleFormSubmit}>
+                                    <textarea onKeyDown={checkKey} placeholder="Start typing..." value={message} onChange={handleTextareaChange}></textarea>
+                                    <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>
+                                </form>
+                            </div>}
+                            {withUsername != "" && sortedMessages.length == 0 && currentUsername != withUsername && <div className="chatarea">
+                                <div className="nocontact">
+                                    <h1 className="quiet">It's kinda quiet here!</h1>
+                                    <p>Send a message to get things started.</p>
+                                </div>
+                                <form className="messagebar" onSubmit={handleFormSubmit}>
+                                    <textarea onKeyDown={checkKey} placeholder="Start typing..." value={message} onChange={handleTextareaChange}></textarea>
+                                    <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>
+                                </form>
+                            </div>}
+                            {withUsername != "" && <div className="chatarea">
                                 <div className="messages">
                                     {printMessages}
                                 </div>
@@ -326,7 +341,19 @@ const Chat = () => {
                                     <textarea onKeyDown={checkKey} placeholder="Start typing..." value={message} onChange={handleTextareaChange}></textarea>
                                     <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>
                                 </form>
-                            </div>
+                            </div>}
+                            {withUsername == "" && <div className="nocontact">
+                                <h1>Nothing to see here!</h1>
+                                <div className="option">
+                                    <p>Start a new conversation</p><Image src={Arrow2} alt="Arrow right" width={25} height={25}></Image>
+                                </div>
+                                <div className="option">
+                                    <p>Go to my workspace</p><Image src={Arrow2} alt="Arrow right" width={25} height={25}></Image>
+                                </div>
+                                <div className="option">
+                                    <p>Learn how to use Meteorite</p><Image src={Arrow2} alt="Arrow right" width={25} height={25}></Image>
+                                </div>
+                            </div>}
                         </div>
                         <hr />
                         <div className="recents">
@@ -338,9 +365,10 @@ const Chat = () => {
                             </div>
                             <div className="middle">
                                 <h1>Recents</h1>
-                                <ul className="people">
+                                {sortedRecents.length > 0 && <ul className="people">
                                     {printRecents}
-                                </ul>
+                                </ul>}
+                                {sortedRecents.length == 0 && <p>No recents.</p>}
                             </div>
                             <div className="bottom">
                                 <button className="newchat" onClick={() => searchInputRef.current?.focus()}>

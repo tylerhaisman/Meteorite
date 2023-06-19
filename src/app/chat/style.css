@@ -32,6 +32,35 @@
     z-index: 1;
 }
 
+.chat .page .interface .nocontact {
+    color: #1f1f1f;
+    text-align: center;
+    margin-top: 25vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.chat .page .interface .nocontact h1{
+    margin-bottom: 30px;
+}
+.chat .page .interface .nocontact .quiet{
+    margin-bottom: 0;
+}
+.chat .page .interface .nocontact .option{
+    background-color: #ffffff96;
+    border: 1px solid #1f1f1f25;
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+.chat .page .interface .nocontact .option img{
+    rotate: 90deg;
+}
+
 .chat .page .interface .chatarea {
     /* position: relative;
     width: 100%;
