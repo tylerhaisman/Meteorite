@@ -211,7 +211,7 @@
     border: 1px solid #1f1f1f25;
     list-style: none;
     border-radius: 20px;
-    max-height: 400px;
+    max-height: 100%;
     overflow-y: auto;
 }
 
@@ -219,10 +219,19 @@
     padding: 15px;
     border-radius: 20px;
     transition: 0.2s;
+    display: flex;
+    justify-content: space-between;
 }
 
 .chat .page .recents .people .person:hover {
     background-color: #efefef;
+}
+
+.chat .page .recents .people .person .unread {
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    background-color: #924fff9a;
 }
 
 .chat .page .recents .searchbar {

@@ -199,6 +199,7 @@ export async function getMessages(email: string, withUsername: string) {
   const db = Database.getInstance();
   const client = db.getPool();
   try {
+
     const response = await client.query(`SELECT messages FROM messagedata WHERE email = $1`, [email]);
     if (response.rows.length > 0) {
       interface UserMessage {
@@ -206,6 +207,7 @@ export async function getMessages(email: string, withUsername: string) {
         to: string;
         content: string;
         timestamp: string;
+        read: boolean;
       }
       let messages: UserMessage[] = [];
       messages = response.rows[0].messages;
@@ -247,6 +249,58 @@ export async function getRecents(email: string) {
   }
 }
 
+export async function changePassword(email: string, password: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
+  try {
+    const response = await client.query(`SELECT recents FROM messagedata WHERE email = $1`, [email]);
+    if (response.rows.length > 0) {
+      interface Contact {
+        firstName: string;
+        lastName: string;
+        username: string;
+      }
+      let recents: Contact[] = [];
+      recents = response.rows[0].recents;
+      return recents;
+    }
+    else {
+      return null;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function setMessagesRead(email: string, withUsername: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
+  try {
+    interface Contact {
+      firstName: string;
+      lastName: string;
+      username: string;
+      unreadMessages: boolean;
+    }    
+    const results = await client.query('SELECT messages, recents, username FROM messagedata WHERE email = $1', [email]);
+    const recents: Contact[] = results.rows[0].recents;
+    const username = results.rows[0].username;
+
+    const index = recents.findIndex(recent => recent.username === withUsername);
+    recents[index].unreadMessages = false;
+    const recentString = JSON.stringify(recents);
+    try {
+      await client.query('UPDATE messagedata SET recents = $1 WHERE username = $2', [recentString, username]);
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+    return true;
+  } catch (error) {
+    return error;
+  }
+}
+
 export async function sendMessage(email: string, withUsername: string, message: string) {
   const db = Database.getInstance();
   const client = db.getPool();
@@ -257,12 +311,14 @@ export async function sendMessage(email: string, withUsername: string, message: 
       to: string;
       content: string;
       timestamp: string;
+      read: boolean;
     }
 
     interface Contact {
       firstName: string;
       lastName: string;
       username: string;
+      unreadMessages: boolean;
     }
 
     let userMessages: UserMessage[] = [];
@@ -283,6 +339,7 @@ export async function sendMessage(email: string, withUsername: string, message: 
         to: withUsername,
         content: encryptedMessage,
         timestamp: timestamp,
+        read: false,
       });
 
       const userString = JSON.stringify(userMessages);
@@ -306,6 +363,7 @@ export async function sendMessage(email: string, withUsername: string, message: 
             to: withUsername,
             content: otherEncryptedMessage,
             timestamp: timestamp,
+            read: false,
           });
 
           const otherUserString = JSON.stringify(otherUserMessages);
@@ -322,6 +380,7 @@ export async function sendMessage(email: string, withUsername: string, message: 
             firstName: withUsername,
             lastName: withUsername,
             username: withUsername,
+            unreadMessages: true,
           });
           const recentsString = JSON.stringify(recents);
           await client.query('UPDATE messagedata SET recents = $1 WHERE username = $2', [recentsString, username]);
@@ -341,7 +400,14 @@ export async function sendMessage(email: string, withUsername: string, message: 
             firstName: username,
             lastName: username,
             username: username,
+            unreadMessages: true,
           });
+          const otherRecentsString = JSON.stringify(otherRecents);
+          await client.query('UPDATE messagedata SET recents = $1 WHERE username = $2', [otherRecentsString, withUsername]);
+        }
+        else {
+          const index = otherRecents.findIndex(recent => recent.username === username);
+          otherRecents[index].unreadMessages = true;
           const otherRecentsString = JSON.stringify(otherRecents);
           await client.query('UPDATE messagedata SET recents = $1 WHERE username = $2', [otherRecentsString, withUsername]);
         }

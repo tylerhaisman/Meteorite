@@ -10,6 +10,8 @@ import {
   getUsernameByEmail,
   getRecents,
   getAllUsernames,
+  setMessagesRead,
+  changePassword,
 } from "./query";
 
 export async function POST(req: Request) {
@@ -43,6 +45,22 @@ export async function POST(req: Request) {
     const response = await findUserByEmail(data.email);
     if (response == null) {
       return NextResponse.json({ message: 'No user found! Please sign up.' }, { status: 400 });
+    }
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else if (data.action === "setMessagesRead") {
+    const response = await setMessagesRead(data.email, data.withUsername);
+    if (response == null) {
+      return NextResponse.json({ message: 'Error reading message.' }, { status: 400 });
+    }
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else if (data.action === "changePassword") {
+    const response = await changePassword(data.email, data.password);
+    if (response == null) {
+      return NextResponse.json({ message: 'Error changing password.' }, { status: 400 });
     }
     return NextResponse.json({ message: response }, { status: 200 });
   }

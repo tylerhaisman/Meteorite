@@ -32,6 +32,8 @@ const Chat = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const [unreadMessages, setUnreadMessages] = useState(false);
+    const [lastUsername, setLastUsername] = useState("");
 
     //checking for authentication
     const { data: session, status } = useSession();
@@ -53,6 +55,16 @@ const Chat = () => {
             }
         }
     };
+
+    const setWithUsernameAndReadMessage = async (username: string) => {
+        if (withUsername !== username) {
+            setLastUsername(withUsername);
+            setWithUsername(username);
+            await setMessagesRead();
+        }
+    };
+
+
 
 
     const handleFormSubmit = async (event: FormEvent) => {
@@ -192,16 +204,45 @@ const Chat = () => {
         }
     };
 
+    const setMessagesRead = async () => {
+        try {
+            const response = await fetch('/api/database', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: "setMessagesRead",
+                    email: session?.user?.email,
+                    withUsername,
+                }),
+            });
+            const data = await response.json();
+            if (data.message == "Error reading message.") {
+                toast.error("An error occured.");
+                return;
+            }
+            return true;
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occured.");
+            throw error;
+        }
+    };
+
     type Message = {
         from: string;
         to: string;
         content: string;
         timestamp: string;
+        read: boolean;
     };
+
     type Contact = {
         firstName: string;
         lastName: string;
         username: string;
+        unreadMessages: boolean;
     };
     const [sortedMessages, setSortedMessages] = useState<Message[]>([]);
     const [sortedRecents, setSortedRecents] = useState<Contact[]>([]);
@@ -209,12 +250,14 @@ const Chat = () => {
 
     const pollForNewMessages = async () => {
         const messages = await getMessages();
+        console.log(messages);
         setSortedMessages(messages.message);
         const recents = await getRecents();
         setSortedRecents(recents.message);
         const usernames = await getAllUsernames();
         setAllUsernames(usernames.message);
     };
+
 
     const startPolling = () => {
         if (pollingIntervalId) {
@@ -252,8 +295,21 @@ const Chat = () => {
     });
 
     const printRecents = sortedRecents.map((item, pos) => {
-        return <li className="person" onClick={() => setWithUsername(item.username)} key={pos} style={{ backgroundColor: withUsername == item.username ? "#dfdfdf" : "" }}>@{item.username}</li>
+        const isUnread = item.unreadMessages && withUsername !== item.username;
+        return (
+            <li
+                className="person"
+                onClick={() => setWithUsernameAndReadMessage(item.username)}
+                key={pos}
+                style={{ backgroundColor: withUsername === item.username ? "#dfdfdf" : "" }}
+            >
+                {item.username === currentUsername && <p>@{item.username} (me)</p>}
+                {item.username !== currentUsername && <p>@{item.username}</p>}
+                {isUnread && item.username != lastUsername && <div className="unread"></div>}
+            </li>
+        );
     });
+
 
     const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
@@ -266,7 +322,7 @@ const Chat = () => {
             if (!exists) {
                 toast.error("No username exists!");
             } else {
-                setWithUsername(searchValue);
+                setWithUsernameAndReadMessage(searchValue);
                 setSearchValue("");
             }
         }
@@ -285,8 +341,7 @@ const Chat = () => {
                 const user = await getUserByEmail();
                 setFirstName(user.firstname);
                 setLastName(user.lastname);
-                const username = await getUserByEmail()
-                setCurrentUsername(username.username);
+                setCurrentUsername(user.username);
                 const recents = await getRecents();
                 setSortedRecents(recents.message);
                 const usernames = await getAllUsernames();

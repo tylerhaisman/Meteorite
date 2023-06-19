@@ -21,6 +21,7 @@
   border-radius: 20px;
   transition: 0.2s;
   box-shadow: 0 0 10px #000;
+  position: relative;
 }
 .sidebar .item.selected{
   padding: 20px;
@@ -33,4 +34,26 @@
 
 .sidebar .logout{
   margin-bottom: 20px;
+}
+
+.sidebar .item .tooltiptext {
+  visibility: hidden;
+  backdrop-filter: blur(10px);
+  color: #1f1f1f;
+  text-align: left;
+  font-family: p;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 30px;
+  top: 12px;
+  position: absolute;
+  z-index: 10;
+  width: max-content;
+  font-size: 18px;
+  background-color: #ffffff96;
+  border: 1px solid #1f1f1f25;
+}
+
+.sidebar .item:hover .tooltiptext {
+  visibility: visible;
 }
