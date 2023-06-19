@@ -36,6 +36,10 @@
   margin-bottom: 20px;
 }
 
+.sidebar .logout:hover{
+  cursor: pointer;
+}
+
 .sidebar .item .tooltiptext {
   visibility: hidden;
   backdrop-filter: blur(10px);

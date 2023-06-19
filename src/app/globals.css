@@ -49,6 +49,7 @@ button:hover{
   /* box-shadow: 0 0 20px #11111143; */
   transform: translateY(-5px);
   background-color: #ffffff78;
+  cursor: pointer;
 }
 a{
   color: #fff;

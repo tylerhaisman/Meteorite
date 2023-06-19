@@ -16,6 +16,7 @@ import ToMessage from "@/components/messages/ToMessage";
 import FromMessage from "@/components/messages/FromMessage";
 import Plus from "../../assets/icons/plus.svg"
 import Profile from "../../assets/images/profile.png"
+import Link from "next/link";
 
 type User = {
     username: string;
@@ -399,15 +400,15 @@ const Chat = () => {
                             </div>}
                             {withUsername == "" && <div className="nocontact">
                                 <h1>Nothing to see here!</h1>
-                                <div className="option">
+                                <div onClick={() => searchInputRef.current?.focus()} className="option">
                                     <p>Start a new conversation</p><Image src={Arrow2} alt="Arrow right" width={25} height={25}></Image>
                                 </div>
-                                <div className="option">
+                                <div onClick={() => setWithUsernameAndReadMessage(currentUsername)} className="option">
                                     <p>Go to my workspace</p><Image src={Arrow2} alt="Arrow right" width={25} height={25}></Image>
                                 </div>
-                                <div className="option">
+                                <Link href="https://github.com/tylerhaisman/Meteorite" target="_blank"><div className="option">
                                     <p>Learn how to use Meteorite</p><Image src={Arrow2} alt="Arrow right" width={25} height={25}></Image>
-                                </div>
+                                </div></Link>
                             </div>}
                         </div>
                         <hr />

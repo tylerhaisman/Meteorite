@@ -56,6 +56,10 @@
     gap: 5px;
     align-items: center;
     justify-content: center;
+    color: #1f1f1f;
+}
+.chat .page .interface .nocontact .option:hover{
+    cursor: pointer;
 }
 .chat .page .interface .nocontact .option img{
     rotate: 90deg;
@@ -211,7 +215,7 @@
     border: 1px solid #1f1f1f25;
     list-style: none;
     border-radius: 20px;
-    max-height: 100%;
+    max-height: 250px;
     overflow-y: auto;
 }
 
@@ -225,6 +229,7 @@
 
 .chat .page .recents .people .person:hover {
     background-color: #efefef;
+    cursor: pointer;
 }
 
 .chat .page .recents .people .person .unread {
