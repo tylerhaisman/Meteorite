@@ -1,10 +1,10 @@
 import NextAuth from "next-auth/next";
 import { NextResponse } from "next/server";
 import CredentialsProvider from "next-auth/providers/credentials";
-const client = require("../../database/connection");
+// const client = require("../../../../PSQL/connection");
 const bcrypt = require("bcrypt");
 import {
-    findUserByEmail,
+    findFullUser,
   } from "../../database/query";
 
 const handler = NextAuth({
@@ -26,7 +26,7 @@ const handler = NextAuth({
                     password: string
                 };
                 // Add logic here to look up the user from the credentials supplied
-                const user = await findUserByEmail(email);
+                const user = await findFullUser(email);
 
                 if (user) {
                     // Any object returned will be saved in `user` property of the JWT

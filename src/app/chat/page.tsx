@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState, FormEvent, ChangeEvent } from "react";
+import React, { useEffect, useState, FormEvent, ChangeEvent, KeyboardEvent, useRef } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
@@ -13,90 +13,83 @@ import Circle from "@/components/cirlce/Circle";
 import { useRouter } from "next/navigation";
 import ToMessage from "@/components/messages/ToMessage";
 import FromMessage from "@/components/messages/FromMessage";
+import Plus from "../../assets/icons/plus.svg"
+import Profile from "../../assets/images/profile.png"
+
+type User = {
+    username: string;
+};
 
 const Chat = () => {
     //rendering hooks
     const router = useRouter();
-    const withUsername = "troubleshute";
+    const [withUsername, setWithUsername] = useState("");
     const [message, setMessage] = useState<string>("");
+    const [currentUsername, setCurrentUsername] = useState("");
+    const [allUsernames, setAllUsernames] = useState<User[]>([]);
+    const [searchValue, setSearchValue] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     //checking for authentication
-    const { data: session, status } = useSession()
-    if (status === "loading") {
-        return <Loader></Loader>
-    }
-    if (status === "unauthenticated") {
-        router.push("/auth/signin");
-        return
+    const { data: session, status } = useSession();
+
+    // const handleSendMessage = async () => {
+    //     await sendMessage();
+    //     setMessage("");
+    // };
+
+    const handleSendMessage = async () => {
+        const loadingToast = toast.loading("Sending...");
+        try {
+          await sendMessage();
+          setMessage("");
+          toast.success('Message sent!', { id: loadingToast });
+        } catch (error) {
+          toast.error('Failed to send message', { id: loadingToast });
+        }
+      };
+      
+
+    const handleFormSubmit = async (event: FormEvent) => {
+        event.preventDefault();
+        await handleSendMessage();
+    };
+
+    const checkKey = async (event: KeyboardEvent) => {
+        if (event.key == "Enter" && !event.shiftKey) {
+            await handleSendMessage();
+        }
     }
 
-    //if user is authenticated
-    const handleSendMessage = async (event: FormEvent) => {
-        event.preventDefault();
-        toast.loading("Sending...");
-        await sendMessage();
-        setMessage("");
-        toast.remove();
-    }
     const sendMessage = async () => {
-        try {
-            const response = await fetch('/api/database', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: "sendMessage",
-                    email: session?.user?.email,
-                    withUsername: withUsername,
-                    message,
-                }),
-            });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-            toast.error("An error occured.");
-            throw error;
+        if (message != "") {
+            try {
+                const response = await fetch('/api/database', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: "sendMessage",
+                        email: session?.user?.email,
+                        withUsername: withUsername,
+                        message,
+                    }),
+                });
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error(error);
+                toast.error("An error occured.");
+                throw error;
+            }
         }
     }
     const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(event.target.value);
     };
-
-
-
-    const [sortedMessages, setSortedMessages] = useState([]);
-    const [pollingIntervalId, setPollingIntervalId] = useState<NodeJS.Timeout | null>(null);
-
-    const pollForNewMessages = async () => {
-        const messages = await getMessages();
-        setSortedMessages(messages.message.reverse());
-    };
-
-    const startPolling = () => {
-        if (pollingIntervalId) {
-            clearInterval(pollingIntervalId);
-        }
-        const intervalId = setInterval(pollForNewMessages, 1000);
-        setPollingIntervalId(intervalId);
-    };
-
-    const stopPolling = () => {
-        if (pollingIntervalId) {
-            clearInterval(pollingIntervalId);
-        }
-        setPollingIntervalId(null);
-    };
-
-    useEffect(() => {
-        startPolling();
-        return () => stopPolling();
-    }, [withUsername]);
-
-    const printMessages = sortedMessages.map((item, pos) => {
-
-    });
 
     const getMessages = async () => {
         try {
@@ -112,6 +105,10 @@ const Chat = () => {
                 }),
             });
             const data = await response.json();
+            if (data.message == "Error retrieving messages.") {
+                toast.error("An error occured.");
+                return;
+            }
             return data;
         } catch (error) {
             console.error(error);
@@ -120,7 +117,198 @@ const Chat = () => {
         }
     };
 
+    const getRecents = async () => {
+        try {
+            const response = await fetch('/api/database', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: "getRecents",
+                    email: session?.user?.email,
+                }),
+            });
+            const data = await response.json();
+            if (data.message == "Error retrieving recents.") {
+                toast.error("An error occured.");
+                return;
+            }
+            return data;
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occured.");
+            throw error;
+        }
+    };
 
+    const getAllUsernames = async () => {
+        try {
+            const response = await fetch('/api/database', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: "getAllUsernames",
+                }),
+            });
+            const data = await response.json();
+            if (data.message == "Error retrieving recents.") {
+                toast.error("An error occured.");
+                return;
+            }
+            return data;
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occured.");
+            throw error;
+        }
+    };
+
+    const getUserByEmail = async () => {
+        try {
+            const response = await fetch('/api/database', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: "findUserByEmail",
+                    email: session?.user?.email,
+                }),
+            });
+            const data = await response.json();
+            if (data.message == "Error retrieving username.") {
+                toast.error("An error occured.");
+                return;
+            }
+            return data.message;
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occured.");
+            throw error;
+        }
+    };
+
+    type Message = {
+        from: string;
+        to: string;
+        content: string;
+        timestamp: string;
+    };
+    type Contact = {
+        firstName: string;
+        lastName: string;
+        username: string;
+    };
+    const [sortedMessages, setSortedMessages] = useState<Message[]>([]);
+    const [sortedRecents, setSortedRecents] = useState<Contact[]>([]);
+    const [pollingIntervalId, setPollingIntervalId] = useState<NodeJS.Timeout | null>(null);
+
+    const pollForNewMessages = async () => {
+        const messages = await getMessages();
+        setSortedMessages(messages.message);
+        const recents = await getRecents();
+        setSortedRecents(recents.message);
+        const usernames = await getAllUsernames();
+        setAllUsernames(usernames.message);
+    };
+
+    // const startPolling = () => {
+    //     if (pollingIntervalId) {
+    //         clearInterval(pollingIntervalId);
+    //     }
+    //     const intervalId = setInterval(pollForNewMessages, 1000);
+    //     setPollingIntervalId(intervalId);
+    // };
+
+    const startPolling = () => {
+        if (pollingIntervalId) {
+          clearInterval(pollingIntervalId);
+        }
+      
+        // Show loading toast
+        const loadingToast = toast.loading("Loading messages...");
+      
+        const intervalId = setInterval(async () => {
+          await pollForNewMessages();
+      
+          // Remove loading toast after messages are updated
+          toast.dismiss(loadingToast);
+        }, 1000);
+      
+        setPollingIntervalId(intervalId);
+      };
+      
+
+    const stopPolling = () => {
+        if (pollingIntervalId) {
+            clearInterval(pollingIntervalId);
+        }
+        setPollingIntervalId(null);
+    };
+
+    const printMessages = sortedMessages.map((item, pos) => {
+        if (item.from === currentUsername && item.to === withUsername) {
+            return <ToMessage message={item.content} key={pos} />;
+        } else if (item.to === currentUsername && item.from === withUsername) {
+            return <FromMessage message={item.content} key={pos} />;
+        }
+        return null;
+    });
+
+    const printRecents = sortedRecents.map((item, pos) => {
+        return <li className="person" onClick={() => setWithUsername(item.username)} key={pos} style={{ backgroundColor: withUsername == item.username ? "#dfdfdf" : "" }}>@{item.username}</li>
+    });
+
+    const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(event.target.value);
+    };
+
+    const handleSearchSubmit = (event: FormEvent) => {
+        event.preventDefault();
+        const exists = allUsernames.some((obj) => obj.username === searchValue);
+        if (!exists) {
+            toast.error("No username exists!");
+        } else {
+            setWithUsername(searchValue);
+            setSearchValue("");
+        }
+    };
+
+    useEffect(() => {
+        if (withUsername != "") {
+            startPolling();
+        }
+        return () => stopPolling();
+    }, [withUsername])
+
+    useEffect(() => {
+        const fetch = async () => {
+            if (session) {
+                const user = await getUserByEmail();
+                setFirstName(user.firstname);
+                setLastName(user.lastname);
+                const username = await getUserByEmail()
+                setCurrentUsername(username.username);
+                const recents = await getRecents();
+                setSortedRecents(recents.message);
+                const usernames = await getAllUsernames();
+                setAllUsernames(usernames.message);
+            }
+        }
+        if (status === "authenticated") {
+            fetch();
+        }
+    }, [session, status])
+    if (status === "loading") {
+        return <Loader></Loader>
+    }
+    if (status === "unauthenticated") {
+        router.push("/auth/signin");
+        return
+    }
     return (
         <div className="chat">
             <Circle></Circle>
@@ -128,16 +316,44 @@ const Chat = () => {
                 <Toaster></Toaster>
                 <div className="page">
                     <Sidebar></Sidebar>
-                    <div className="interface">
-                        <div className="chatarea">
-                            <div className="messages">
-                                <ToMessage message="Hello world"></ToMessage>
-                                <FromMessage message="Hello world"></FromMessage>
+                    <div className="board">
+                        <div className="interface">
+                            <div className="chatarea">
+                                <div className="messages">
+                                    {printMessages}
+                                </div>
+                                <form className="messagebar" onSubmit={handleFormSubmit}>
+                                    <textarea onKeyDown={checkKey} placeholder="Start typing..." value={message} onChange={handleTextareaChange}></textarea>
+                                    <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>
+                                </form>
                             </div>
-                            <form className="messagebar" onSubmit={handleSendMessage}>
-                                <textarea placeholder="Start typing..." value={message} onChange={handleTextareaChange}></textarea>
-                                <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>
-                            </form>
+                        </div>
+                        <hr />
+                        <div className="recents">
+                            <div className="top">
+                                <form className="searchbar" onSubmit={handleSearchSubmit}>
+                                    <input placeholder="Add username" onChange={handleSearchInputChange} value={searchValue} ref={searchInputRef}></input>
+                                    <button><Image src={Plus} alt="Send" width={20} height={20}></Image></button>
+                                </form>
+                            </div>
+                            <div className="middle">
+                                <h1>Recents</h1>
+                                <ul className="people">
+                                    {printRecents}
+                                </ul>
+                            </div>
+                            <div className="bottom">
+                                <button className="newchat" onClick={() => searchInputRef.current?.focus()}>
+                                    New Chat <Image src={Plus} alt="Send" width={20} height={20} />
+                                </button>
+                                <div className="profile">
+                                    <Image src={Profile} alt="Your profile picture" width={40} height={40}></Image>
+                                    <div className="name">
+                                        <h2>{firstName} {lastName}</h2>
+                                        <p>@{currentUsername}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,27 +3,55 @@
     overflow: hidden;
     min-height: 100vh;
 }
-.chat .page{
+
+.chat .page {
     display: flex;
     gap: 20px;
 }
-.chat .page .interface{
-    background-color: #ffffffe8;
+
+.chat .page .board {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    height: calc(100vh - 40px);
+    margin: auto;
     width: 100%;
-    margin: 20px;
+    background-color: #ffffffe8;
+    border-radius: 20px;
+}
+
+.chat .page .board hr {
+    border: 1px dashed #1f1f1f25;
+}
+
+.chat .page .interface {
+    position: relative;
+    /* height: 100vh; */
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.chat .page .interface .chatarea {
+    /* position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px; */
+    /* background-color: #ffffffe8; */
+    width: 100%;
     margin-right: 0;
     margin-left: 0;
     border-radius: 20px;
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
     z-index: 1;
+    overflow: hidden;
 }
-.chat .page .interface .chatarea{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-}
-.chat .page .interface .chatarea .messagebar{
+
+.chat .page .interface .chatarea .messagebar {
     height: 50px;
     min-height: 28px;
     max-height: 300px;
@@ -32,14 +60,17 @@
     bottom: 20px;
     left: 20px;
     right: 20px;
-    background-color: #fff;
+    background-color: #ffffff96;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
     gap: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid #1f1f1f25;
 }
-.chat .page .interface .chatarea .messagebar textarea{
+
+.chat .page .interface .chatarea .messagebar textarea {
     flex: 1;
     font-size: 18px;
     height: 28px;
@@ -54,13 +85,205 @@
     border: 0;
     border-radius: 20px;
     outline: none;
+    background-color: #ffffff00;
 }
-.chat .page .interface .chatarea .messagebar button{
+
+.chat .page .interface .chatarea .messagebar button {
     background: linear-gradient(#924fff9a, #2b4e80);
     height: 100%;
     transform: translateY(0);
     box-shadow: 0;
 }
-.chat .page .interface .chatarea .messagebar button img{
+
+.chat .page .interface .chatarea .messagebar button:hover {
+    transform: translateY(-2px);
+}
+
+
+.chat .page .interface .chatarea .messagebar button img {
     scale: 1.8;
 }
+
+.chat .page .interface .chatarea .messages {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    padding-bottom: 120px;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.chat .page .interface .chatarea .messages .message {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #1f1f1f;
+    font-family: p;
+    font-size: 18px;
+}
+
+.chat .page .interface .chatarea .messages .message.to {
+    justify-content: flex-end;
+}
+
+.chat .page .interface .chatarea .messages .message.from {
+    justify-content: flex-start;
+}
+
+.chat .page .interface .chatarea .messages .message img {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(#924fff9a, #2b4e80);
+    border-radius: 50%;
+}
+
+.chat .page .interface .chatarea .messages .message .bubble {
+    border: 1px solid #1f1f1f25;
+    border-radius: 20px;
+    max-width: 500px;
+    padding: 15px;
+    background-color: #ffffff96;
+}
+
+.chat .page .recents {
+    position: relative;
+    z-index: 1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    color: #1f1f1f;
+    padding: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat .page .recents input {
+    background-color: #ffffff96;
+    border: 1px solid #1f1f1f25;
+    padding: 15px;
+    border-radius: 20px;
+    list-style: none;
+    font-size: 18px;
+    font-family: p;
+    margin-bottom: 20px;
+}
+
+.chat .page .recents .people {
+    background-color: #ffffff96;
+    border: 1px solid #1f1f1f25;
+    list-style: none;
+    border-radius: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.chat .page .recents .people .person {
+    padding: 15px;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.chat .page .recents .people .person:hover {
+    background-color: #efefef;
+}
+
+.chat .page .recents .searchbar {
+    height: 50px;
+    min-height: 28px;
+    max-height: 300px;
+    border-radius: 20px;
+    background-color: #ffffff96;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid #1f1f1f25;
+    margin-bottom: 30px;
+}
+
+.chat .page .recents .searchbar input {
+    flex: 1;
+    font-size: 18px;
+    height: 28px;
+    min-height: 28px;
+    max-height: 300px;
+    resize: none;
+    color: #1f1f1f;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: p;
+    border: 0;
+    border-radius: 20px;
+    outline: none;
+    background-color: #ffffff00;
+    margin: 0;
+}
+
+.chat .page .recents .searchbar button {
+    background: linear-gradient(#924fff9a, #2b4e80);
+    height: 100%;
+    box-shadow: 0;
+}
+.chat .page .recents .searchbar button:hover{
+    transform: translateY(-2px);
+}
+
+.chat .page .recents .searchbar button img {
+    scale: 1.4;
+}
+
+.chat .page .recents .bottom {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+.chat .page .recents .bottom button{
+    background: linear-gradient(#924fff9a, #2b4e80);
+}
+.chat .page .recents .profile {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 18px;
+}
+
+.chat .page .recents .profile img{
+    background: linear-gradient(#924fff9a, #2b4e80);
+    border-radius: 50%;
+}
+
+.chat .page .recents .profile h2{
+    font-size: 18px;
+    font-family: h1;
+}
+
+/* width */
+.board ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  .board ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  .board ::-webkit-scrollbar-thumb {
+    background: #1f1f1f25;
+    border-radius: 10px;
+  }

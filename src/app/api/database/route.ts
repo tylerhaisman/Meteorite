@@ -7,6 +7,9 @@ import {
   userSignIn,
   getMessages,
   sendMessage,
+  getUsernameByEmail,
+  getRecents,
+  getAllUsernames,
 } from "./query";
 
 export async function POST(req: Request) {
@@ -44,6 +47,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: response }, { status: 200 });
   }
 
+  else if (data.action === "getUsernameByEmail") {
+    const response = await getUsernameByEmail(data.email);
+    if (response == null) {
+      return NextResponse.json({ message: 'Error retrieving username.' }, { status: 400 });
+    }
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
   else if (data.action === "userSignIn") {
     const response = await userSignIn(data.email, data.password);
     if (response == "No user found") {
@@ -58,7 +69,23 @@ export async function POST(req: Request) {
   else if (data.action === "getMessages") {
     const response = await getMessages(data.email, data.withUsername);
     if (response == null) {
-      return NextResponse.json({ message: 'No user found! Please sign up.' }, { status: 400 });
+      return NextResponse.json({ message: 'Error retrieving messages.' }, { status: 400 });
+    }
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else if (data.action === "getRecents") {
+    const response = await getRecents(data.email);
+    if (response == null) {
+      return NextResponse.json({ message: 'Error retrieving recents.' }, { status: 400 });
+    }
+    return NextResponse.json({ message: response }, { status: 200 });
+  }
+
+  else if (data.action === "getAllUsernames") {
+    const response = await getAllUsernames();
+    if (response == null) {
+      return NextResponse.json({ message: 'Error retrieving usernames.' }, { status: 400 });
     }
     return NextResponse.json({ message: response }, { status: 200 });
   }

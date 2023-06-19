@@ -1,9 +1,14 @@
-const client = require("../database/connection");
+// const client = require("../database/connection");
+import Database from './connection';
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require('uuid');
 import User from "./models/user";
+const crypto = require('crypto');
+const encryptionKey = process.env.ENCRYPTION_KEY;
 
 export async function createTables() {
+  const db = Database.getInstance();
+  const client = db.getPool();
   // await client.query('DROP TABLE users;');
   // await client.query('DROP TABLE messagedata;');
   const createUsers = `
@@ -32,8 +37,10 @@ export async function createTables() {
 }
 
 export async function findUserById(id: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
   try {
-    const response = await client.query(`SELECT * FROM users WHERE id = $1`, [id]);
+    const response = await client.query(`SELECT username, firstName, lastName FROM users WHERE id = $1`, [id]);
     if (response.rows.length > 0) {
       return response.rows[0];
     }
@@ -46,6 +53,24 @@ export async function findUserById(id: string) {
 }
 
 export async function findUserByEmail(email: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
+  try {
+    const response = await client.query(`SELECT username, firstName, lastName FROM users WHERE email = $1`, [email]);
+    if (response.rows.length > 0) {
+      return response.rows[0];
+    }
+    else {
+      return null;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function findFullUser(email: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
   try {
     const response = await client.query(`SELECT * FROM users WHERE email = $1`, [email]);
     if (response.rows.length > 0) {
@@ -59,7 +84,41 @@ export async function findUserByEmail(email: string) {
   }
 }
 
+export async function getAllUsernames() {
+  const db = Database.getInstance();
+  const client = db.getPool();
+  try {
+    const response = await client.query(`SELECT username FROM users`);
+    if (response.rows.length > 0) {
+      return response.rows;
+    }
+    else {
+      return null;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function getUsernameByEmail(email: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
+  try {
+    const response = await client.query(`SELECT username FROM users WHERE email = $1`, [email]);
+    if (response.rows.length > 0) {
+      return response.rows[0];
+    }
+    else {
+      return null;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
 export async function userSignIn(email: string, password: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
   try {
     const response = await client.query(`SELECT * FROM users WHERE email = $1`, [email]);
     if (response.rows.length > 0) {
@@ -86,6 +145,8 @@ export async function addUser(
   firstName: string,
   lastName: string
 ) {
+  const db = Database.getInstance();
+  const client = db.getPool();
   try {
     const emails = await client.query('SELECT * FROM users WHERE email = $1', [email]);
     if (emails.rows.length > 0) {
@@ -135,6 +196,8 @@ export async function addUser(
 }
 
 export async function getMessages(email: string, withUsername: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
   try {
     const response = await client.query(`SELECT messages FROM messagedata WHERE email = $1`, [email]);
     if (response.rows.length > 0) {
@@ -147,7 +210,34 @@ export async function getMessages(email: string, withUsername: string) {
       let messages: UserMessage[] = [];
       messages = response.rows[0].messages;
       const filteredMessages = messages.filter((message) => (message.from === withUsername) || (message.to === withUsername));
-      return filteredMessages;
+      const decryptedMessages = filteredMessages.map((message) => ({
+        ...message,
+        content: decryptMessage(message.content, encryptionKey),
+      }));
+      return decryptedMessages;
+    }
+    else {
+      return null;
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function getRecents(email: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
+  try {
+    const response = await client.query(`SELECT recents FROM messagedata WHERE email = $1`, [email]);
+    if (response.rows.length > 0) {
+      interface Contact {
+        firstName: string;
+        lastName: string;
+        username: string;
+      }
+      let recents: Contact[] = [];
+      recents = response.rows[0].recents;
+      return recents;
     }
     else {
       return null;
@@ -158,6 +248,8 @@ export async function getMessages(email: string, withUsername: string) {
 }
 
 export async function sendMessage(email: string, withUsername: string, message: string) {
+  const db = Database.getInstance();
+  const client = db.getPool();
   try {
 
     interface UserMessage {
@@ -167,8 +259,14 @@ export async function sendMessage(email: string, withUsername: string, message: 
       timestamp: string;
     }
 
+    interface Contact {
+      firstName: string;
+      lastName: string;
+      username: string;
+    }
+
     let userMessages: UserMessage[] = [];
-    let recents: Array<string>;
+    let recents: Contact[] = [];
     let username: string;
 
     try {
@@ -178,10 +276,12 @@ export async function sendMessage(email: string, withUsername: string, message: 
       username = results.rows[0].username;
       const timestamp = new Date().toString();
 
+      const encryptedMessage = encryptMessage(message, encryptionKey);
+
       userMessages.push({
         from: username,
         to: withUsername,
-        content: message,
+        content: encryptedMessage,
         timestamp: timestamp,
       });
 
@@ -198,10 +298,13 @@ export async function sendMessage(email: string, withUsername: string, message: 
           const results = await client.query('SELECT messages FROM messagedata WHERE username = $1', [withUsername]);
           otherUserMessages = results.rows[0].messages;
           // Adding user message and timestamp to the other user's conversation array
+
+          const otherEncryptedMessage = encryptMessage(message, encryptionKey);
+
           otherUserMessages.push({
             from: username,
             to: withUsername,
-            content: message,
+            content: otherEncryptedMessage,
             timestamp: timestamp,
           });
 
@@ -213,9 +316,13 @@ export async function sendMessage(email: string, withUsername: string, message: 
         }
       }
       // Add user to the contacts list
-      if (recents.findIndex(recent => recent === withUsername) === -1) {
+      if (recents.findIndex(recent => recent.username === withUsername) === -1) {
         try {
-          recents.push(withUsername);
+          recents.push({
+            firstName: withUsername,
+            lastName: withUsername,
+            username: withUsername,
+          });
           const recentsString = JSON.stringify(recents);
           await client.query('UPDATE messagedata SET recents = $1 WHERE username = $2', [recentsString, username]);
         } catch (error) {
@@ -225,12 +332,16 @@ export async function sendMessage(email: string, withUsername: string, message: 
       }
 
       // Add user to the other contacts list
-      let otherRecents: Array<string>;
+      let otherRecents: Contact[] = [];
       try {
         const results = await client.query('SELECT recents FROM messagedata WHERE username = $1', [withUsername]);
         otherRecents = results.rows[0].recents;
-        if (otherRecents.findIndex(recent => recent === username) === -1) {
-          otherRecents.push(username);
+        if (otherRecents.findIndex(recent => recent.username === username) === -1) {
+          otherRecents.push({
+            firstName: username,
+            lastName: username,
+            username: username,
+          });
           const otherRecentsString = JSON.stringify(otherRecents);
           await client.query('UPDATE messagedata SET recents = $1 WHERE username = $2', [otherRecentsString, withUsername]);
         }
@@ -249,4 +360,18 @@ export async function sendMessage(email: string, withUsername: string, message: 
   } catch (error) {
     return error;
   }
+}
+
+function encryptMessage(message: string, key: string | undefined) {
+  const cipher = crypto.createCipher('aes-256-cbc', key);
+  let encrypted = cipher.update(message, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
+function decryptMessage(encryptedMessage: string, key: string | undefined) {
+  const decipher = crypto.createDecipher('aes-256-cbc', key);
+  let decrypted = decipher.update(encryptedMessage, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
 }
