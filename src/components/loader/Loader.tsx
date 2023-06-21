@@ -5,7 +5,7 @@ import Circle from "../cirlce/Circle";
 const Loader = () => {
     return (
         <div className="loader">
-            <Circle></Circle>
+            {/* <Circle></Circle> */}
             <div className="lds-ripple"><div></div><div></div></div>
         </div>
     );

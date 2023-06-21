@@ -36,8 +36,10 @@ button{
   font-size: 18px;
   border-radius: 20px;
   padding: 20px;
-  border: 0;
-  background-color: #ffffff5d;
+  /* border: 0; */
+  /* background-color: #ffffff5d; */
+  background-color: #ffffff22;
+  border: 1px solid #ffffff3f;
   color: #fff;
   display: flex;
   justify-content: center;

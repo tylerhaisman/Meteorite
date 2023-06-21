@@ -1,6 +1,10 @@
 .home {
     /* background: radial-gradient(at bottom right, #924fff2c, #111111); */
-    background: linear-gradient(#1f1f1f, #2b4e8052);
+    /* background: linear-gradient(#1f1f1f, #2b4e8052); */
+
+    /* background: linear-gradient(#914dff7c, #2b4e8052); */
+    /* background: radial-gradient(circle at top left, #5555d3, #350e72); */
+    background: radial-gradient(circle at top left, #4f67c8, #434e9e20);
     overflow: hidden;
     min-height: 100vh;
 }
@@ -18,7 +22,8 @@
     flex: 1;
     margin-top: 100px;
 }
-.home .cover .title p{
+
+.home .cover .title p {
     width: fit-content;
     padding: 10px;
     padding-left: 15px;
@@ -26,41 +31,68 @@
     border-radius: 20px;
     border: 1px solid #fff;
 }
-.home .cover .title button{
+
+.home .cover .title h1 {
+    background: -webkit-linear-gradient(#fff, #ffffff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.home .cover .title button {
     margin-top: 60px;
-    box-shadow: 0 0 20px #11111143;
+    /* box-shadow: 0 0 20px #11111143; */
     position: relative;
     z-index: 2;
 }
+
 .home .cover .image {
     flex: 1;
     text-align: center;
 }
-.home .cover .image img{
+
+.home .cover .image img {
     rotate: 20deg;
     animation: floating 3s ease-in-out infinite;
     transition: 4s;
 }
-.home .cover .image img:hover{
+
+.home .cover .image img:hover {
     scale: 1.1;
 }
-@media(max-width: 899px){
-    .home .cover .image img{
+
+@media(max-width: 899px) {
+    .home .cover .image img {
         max-width: 500px;
         max-height: 500px;
     }
 }
-@media(max-width: 499px){
-    .home .cover .image img{
+
+@media(max-width: 699px) {
+    .home .cover .image img {
+        max-width: 400px;
+        max-height: 400px;
+    }
+}
+
+@media(max-width: 499px) {
+    .home .cover .image img {
         max-width: 300px;
         max-height: 300px;
     }
 }
 
 @keyframes floating {
-    0% { transform: translate(0,  0px); }
-    50%  { transform: translate(0, 15px); }
-    100%   { transform: translate(0, -0px); }   
+    0% {
+        transform: translate(0, 0px);
+    }
+
+    50% {
+        transform: translate(0, 15px);
+    }
+
+    100% {
+        transform: translate(0, -0px);
+    }
 }
 
 .home .cover .title h1 {
@@ -68,13 +100,14 @@
     line-height: 90px;
 }
 
-@media(max-width: 550px){
+@media(max-width: 550px) {
     .home .cover .title h1 {
         font-size: 60px;
         line-height: 70px;
     }
 }
-@media(max-width: 400px){
+
+@media(max-width: 400px) {
     .home .cover .title h1 {
         font-size: 50px;
         line-height: 60px;

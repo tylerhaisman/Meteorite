@@ -1,5 +1,5 @@
 .auth {
-    background: linear-gradient(#1f1f1f, #2b4e8052);
+    background: radial-gradient(circle at top left, #4f67c8, #434e9e20);
     overflow: hidden;
     min-height: 100vh;
 }
@@ -20,11 +20,13 @@
 }
 
 .auth .authcontent .box {
-    background-color: #ffffff12;
     backdrop-filter: blur(20px);
+    background-color: #ffffff22;
+    border: 1px solid #ffffff3f;
     padding: 40px;
     border-radius: 20px;
     text-align: center;
+    margin-top: 50px;
 }
 
 
@@ -50,7 +52,8 @@
 }
 
 .auth .authcontent .box h1 {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    font-size: 50px;
 }
 
 .auth .authcontent .box a {

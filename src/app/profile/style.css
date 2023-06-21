@@ -1,5 +1,5 @@
 .account {
-    background: linear-gradient(#1f1f1f, #2b4e8052);
+    background: radial-gradient(circle at top left, #4f67c8, #434e9e20);
     overflow: hidden;
     min-height: 100vh;
 }
@@ -14,6 +14,8 @@
     z-index: 1;
     height: calc(100vh - 40px);
     margin: auto;
+    margin-top: 20px;
+    margin-bottom: 0;
     width: 100%;
     background-color: #ffffffe8;
     border-radius: 20px;
@@ -44,12 +46,12 @@
 }
 
 .account .page .board .info img{
-    background: linear-gradient(#924fff9a, #2b4e80);
+    background-color: #4f67c8;
     border-radius: 50%;
 }
 
 .account .page .board .info button{
-    background: linear-gradient(#924fff9a, #2b4e80);
+    background-color: #4f67c8;
 }
 .account .page .board .info .reds{
     display: flex;

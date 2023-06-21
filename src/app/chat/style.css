@@ -1,5 +1,5 @@
 .chat {
-    background: linear-gradient(#1f1f1f, #2b4e8052);
+    background: radial-gradient(circle at top left, #4f67c8, #434e9e20);
     overflow: hidden;
     min-height: 100vh;
 }
@@ -15,6 +15,8 @@
     display: flex;
     height: calc(100vh - 40px);
     margin: auto;
+    margin-top: 20px;
+    margin-bottom: 0;
     width: 100%;
     background-color: #ffffffe8;
     border-radius: 20px;
@@ -43,6 +45,8 @@
 }
 .chat .page .interface .nocontact h1{
     margin-bottom: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 .chat .page .interface .nocontact .quiet{
     margin-bottom: 0;
@@ -122,7 +126,7 @@
 }
 
 .chat .page .interface .chatarea .messagebar button {
-    background: linear-gradient(#924fff9a, #2b4e80);
+    background-color: #4f67c8;
     height: 100%;
     transform: translateY(0);
     box-shadow: 0;
@@ -171,7 +175,7 @@
 .chat .page .interface .chatarea .messages .message img {
     width: 40px;
     height: 40px;
-    background: linear-gradient(#924fff9a, #2b4e80);
+    background-color: #4f67c8;
     border-radius: 50%;
 }
 
@@ -236,7 +240,7 @@
     border-radius: 50%;
     width: 6px;
     height: 6px;
-    background-color: #924fff9a;
+    background-color: #4f67c8;
 }
 
 .chat .page .recents .searchbar {
@@ -274,7 +278,7 @@
 }
 
 .chat .page .recents .searchbar button {
-    background: linear-gradient(#924fff9a, #2b4e80);
+    background-color: #4f67c8;
     height: 100%;
     box-shadow: 0;
 }
@@ -296,7 +300,7 @@
     flex-direction: column;
 }
 .chat .page .recents .bottom button{
-    background: linear-gradient(#924fff9a, #2b4e80);
+    background-color: #4f67c8;
 }
 .chat .page .recents .profile {
     display: flex;
@@ -306,7 +310,7 @@
 }
 
 .chat .page .recents .profile img{
-    background: linear-gradient(#924fff9a, #2b4e80);
+    background-color: #4f67c8;
     border-radius: 50%;
 }
 

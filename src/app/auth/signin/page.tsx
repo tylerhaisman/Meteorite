@@ -84,7 +84,7 @@ const Login = () => {
     if (!mounted) return <></>;
     return (
         <div className="auth">
-            <Circle></Circle>
+            {/* <Circle></Circle> */}
             <div className="content">
                 <Logo></Logo>
                 <Toaster></Toaster>

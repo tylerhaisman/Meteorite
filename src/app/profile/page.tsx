@@ -14,6 +14,7 @@ import Circle from "@/components/cirlce/Circle";
 import { useRouter } from "next/navigation";
 import Plus from "../../assets/icons/plus.svg"
 import Profile from "../../assets/images/profile.png"
+import Header from "@/components/header/Header";
 
 const Account = () => {
     //rendering hooks
@@ -21,6 +22,25 @@ const Account = () => {
     const [currentUsername, setCurrentUsername] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+
+    const [viewportWidth, setViewportWidth] = useState<number>(0);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setViewportWidth(window.innerWidth);
+      };
+  
+      // Initial width on component mount
+      setViewportWidth(window.innerWidth);
+  
+      // Add event listener to update width on resize
+      window.addEventListener("resize", handleResize);
+  
+      // Clean up the event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
 
     //checking for authentication
     const { data: session, status } = useSession();
@@ -99,11 +119,12 @@ const Account = () => {
     }
     return (
         <div className="account">
-            <Circle></Circle>
+            {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
+                {viewportWidth < 900 && <Header></Header>}
                 <div className="page">
-                    <Sidebar></Sidebar>
+                {viewportWidth >= 900 && <Sidebar></Sidebar>}
                     <div className="board">
                         <div className="profileinfo">
                             <h1>My Profile</h1>

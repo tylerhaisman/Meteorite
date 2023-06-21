@@ -3,4 +3,8 @@
     padding: 10px;
     border-radius: 20px;
     rotate: 45deg;
+    transition: 0.2s;
+}
+.logo img:hover{
+    rotate: 90deg;
 }

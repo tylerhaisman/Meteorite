@@ -36,6 +36,25 @@ const Chat = () => {
     const [unreadMessages, setUnreadMessages] = useState(false);
     const [lastUsername, setLastUsername] = useState("");
 
+    const [viewportWidth, setViewportWidth] = useState<number>(0);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setViewportWidth(window.innerWidth);
+      };
+  
+      // Initial width on component mount
+      setViewportWidth(window.innerWidth);
+  
+      // Add event listener to update width on resize
+      window.addEventListener("resize", handleResize);
+  
+      // Clean up the event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
+
     //checking for authentication
     const { data: session, status } = useSession();
 
@@ -362,11 +381,11 @@ const Chat = () => {
     }
     return (
         <div className="chat">
-            <Circle></Circle>
+            {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
                 <div className="page">
-                    <Sidebar></Sidebar>
+                    {viewportWidth >= 900 && <Sidebar></Sidebar>}
                     <div className="board">
                         <div className="interface">
                             {withUsername != "" && sortedMessages.length == 0 && currentUsername == withUsername && <div className="chatarea">
@@ -411,8 +430,8 @@ const Chat = () => {
                                 </div></Link>
                             </div>}
                         </div>
-                        <hr />
-                        <div className="recents">
+                        {viewportWidth >= 900 && <hr />}
+                        {viewportWidth >= 900 && <div className="recents">
                             <div className="top">
                                 <form className="searchbar" onSubmit={handleSearchSubmit}>
                                     <input placeholder="Add username" onChange={handleSearchInputChange} value={searchValue} ref={searchInputRef}></input>
@@ -438,7 +457,7 @@ const Chat = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>

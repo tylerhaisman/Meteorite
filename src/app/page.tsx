@@ -40,13 +40,13 @@ export default function Home() {
 };
   return (
     <div className="home">
-      <Circle></Circle>
+      {/* <Circle></Circle> */}
       <div className="content">
         <Header></Header>
         <div className="cover">
           <div className="title">
             <p className="name">Meteorite Messaging</p>
-            <h1>Messaging from another planet.</h1>
+            <h1>Messaging. From another planet.</h1>
             <Link href="/chat"><button>Get Started with Meteorite <Image src={Arrow} alt="arrow pointing right" width={20} height={20}></Image></button></Link>
           </div>
           <div className="image">
