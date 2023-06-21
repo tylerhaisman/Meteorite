@@ -17,6 +17,9 @@ import FromMessage from "@/components/messages/FromMessage";
 import Plus from "../../assets/icons/plus.svg"
 import Profile from "../../assets/images/profile.png"
 import Link from "next/link";
+import Header from "@/components/header/Header";
+import { read } from "fs";
+
 
 type User = {
     username: string;
@@ -33,7 +36,6 @@ const Chat = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const [unreadMessages, setUnreadMessages] = useState(false);
     const [lastUsername, setLastUsername] = useState("");
 
     const [viewportWidth, setViewportWidth] = useState<number>(0);
@@ -315,7 +317,7 @@ const Chat = () => {
     });
 
     const printRecents = sortedRecents.map((item, pos) => {
-        const isUnread = item.unreadMessages && withUsername !== item.username;
+        const isUnread = item.unreadMessages && (item.username != currentUsername);
         return (
             <li
                 className="person"
@@ -325,7 +327,7 @@ const Chat = () => {
             >
                 {item.username === currentUsername && <p>@{item.username} (me)</p>}
                 {item.username !== currentUsername && <p>@{item.username}</p>}
-                {isUnread && item.username != lastUsername && <div className="unread"></div>}
+                {isUnread && <div className="unread"></div>}
             </li>
         );
     });
@@ -349,7 +351,11 @@ const Chat = () => {
     };
 
     useEffect(() => {
+        const readMessages = async () => {
+            await setMessagesRead();
+        }
         if (withUsername != "") {
+            readMessages();
             startPolling();
         }
         return () => stopPolling();
@@ -384,6 +390,7 @@ const Chat = () => {
             {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
+                {viewportWidth < 900 && <Header></Header>}
                 <div className="page">
                     {viewportWidth >= 900 && <Sidebar></Sidebar>}
                     <div className="board">

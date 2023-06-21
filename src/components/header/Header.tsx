@@ -1,23 +1,44 @@
 import React, {useState} from "react";
 import "./style.css";
 import Logo from "../logo/Logo";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import HamburgerImg from "../../assets/images/hamburger.png";
 import Link from "next/link";
+import Contacts from "../../assets/icons/contacts.svg";
+import { useRouter, usePathname } from 'next/navigation'
+import { signOut } from "next-auth/react";
 
 
 const Header = () => {
-    const router = useRouter();
+    const pathname = usePathname();
     const [visible, setVisible] = useState(true);
+    const [contactsVisible, setContactsVisible] = useState(true);
+
     const handleCheckboxChange = () => {
         setVisible(!visible); // Toggle the visibility state
+    };
+
+    const handleContactsBoxChange = () => {
+        setContactsVisible(!contactsVisible); // Toggle the visibility state
     };
 
     return ( 
         <div className="header">
             <Logo></Logo>
             <div className="buttons">
+                {pathname === "/chat" && <div className="hamburger">
+                <div className="menu">
+                    <input type="checkbox" onChange={handleContactsBoxChange} />
+                    <label className="checkbox-label">
+                    <Image src={Contacts} alt="Show contacts menu" width={34} height={34}></Image>
+                    </label>
+                </div>
+                {!contactsVisible && (
+                    <div className="recents">
+                        {/* TOGGLE RECENTS DIV HERE */}
+                    </div>
+                )}
+                </div>}
             <div className="hamburger">
                 <div className="menu">
                     <input type="checkbox" onChange={handleCheckboxChange} />
@@ -31,6 +52,7 @@ const Header = () => {
                         <li><Link href="/chat">Chat</Link></li>
                         <li><Link href="/profile">Profile</Link></li>
                         <li><Link href="">Help</Link></li>
+                        <li className="logout" onClick={() => signOut()}>Sign Out</li>
                     </ul>
                 )}
             </div>

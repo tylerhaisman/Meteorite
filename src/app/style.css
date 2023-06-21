@@ -9,6 +9,10 @@
     min-height: 100vh;
 }
 
+.home .logo{
+    margin-top: 20px;
+}
+
 .home .cover {
     display: flex;
     align-items: center;

@@ -7,6 +7,7 @@ import Planet from "../assets/images/planet.png"
 import Arrow from "../assets/images/arrow.png"
 import Link from "next/link";
 import Circle from "@/components/cirlce/Circle";
+import Logo from "@/components/logo/Logo";
 
 export default function Home() {
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function Home() {
     <div className="home">
       {/* <Circle></Circle> */}
       <div className="content">
-        <Header></Header>
+        <Logo></Logo>
         <div className="cover">
           <div className="title">
             <p className="name">Meteorite Messaging</p>

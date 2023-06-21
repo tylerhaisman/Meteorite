@@ -5,12 +5,20 @@
     align-items: center;
 }
 
+.header .buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
 .hamburger{
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    /* border: 1px solid #fff; */
+    border-radius: 20px;
 }
 .hamburger .menu{
-    padding: 10px;
     border-radius: 20px;
     position: relative;
 }
@@ -41,7 +49,6 @@
 
 .hamburger .options {
     background-color: #ffffffd8;
-    color: #1f1f1f;
     box-shadow: 0 0 40px #1f1f1f25;
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -50,19 +57,22 @@
     position: absolute;
     right: 0;
     transition: 0.2s;
+    width: max-content;
 }
 .hamburger .options a {
     text-decoration: none;
+    color: #1f1f1f;
 }
-.hamburger .options a li {
+.hamburger .options li {
+    /* font-family: p; */
     padding: 20px;
     transition: 0.2s;
     text-align: right;
     border-radius: 20px;
     color: #1f1f1f;
-    font-family: pg;
+    font-size: 18px;
 }
-.hamburger .options a .logout {
+.hamburger .options .logout {
     color: red;
 }
 .hamburger .options li:hover {
