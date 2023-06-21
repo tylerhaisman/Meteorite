@@ -1,8 +1,10 @@
 // const client = require("../database/connection");
 import Database from './connection';
 const bcrypt = require("bcrypt");
+// import bcrypt from "bcrypt";
 const { v4: uuidv4 } = require('uuid');
 import User from "./models/user";
+import forge from 'node-forge';
 const crypto = require('crypto');
 const encryptionKey = process.env.ENCRYPTION_KEY;
 
@@ -427,6 +429,32 @@ export async function sendMessage(email: string, withUsername: string, message: 
     return error;
   }
 }
+
+// const algorithm = process.env.ALGORITHM;
+// const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+// const IV_LENGTH = parseInt(process.env.IV_LENGTH || "16");
+
+// function encryptMessage(message: string, key: string | undefined) {
+//   const iv = crypto.randomBytes(IV_LENGTH);
+//   const cipher = crypto.createCipheriv(algorithm, Buffer.from(key || (ENCRYPTION_KEY || "gasfojbwewr408!0083&&*")), iv);
+//   let encrypted = cipher.update(message, 'utf8', 'hex');
+//   encrypted += cipher.final('hex');
+//   return iv.toString('hex') + ':' + encrypted;
+// }
+
+// function decryptMessage(encryptedMessage: string, key: string | undefined) {
+//   const textParts = encryptedMessage.split(':');
+//   const iv = Buffer.from(textParts.shift() || '', 'hex');
+//   const encryptedText = Buffer.from(textParts.join(':'), 'hex');
+//   const decipher = crypto.createDecipheriv(algorithm, Buffer.from(key || (ENCRYPTION_KEY || "gasfojbwewr408!0083&&*")), iv);
+//   let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+//   decrypted += decipher.final('utf8');
+//   return decrypted;
+// }
+
+
+
+
 
 function encryptMessage(message: string, key: string | undefined) {
   const cipher = crypto.createCipher('aes-256-cbc', key);
