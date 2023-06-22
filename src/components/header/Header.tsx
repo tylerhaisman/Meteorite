@@ -12,7 +12,7 @@ interface HeaderProps {
     toggleRecentsPressed: () => void;
   }
 
-const Header: React.FC<HeaderProps> = ({ toggleRecentsPressed }) => {
+const Header= ({ toggleRecentsPressed }: HeaderProps) => {
     const pathname = usePathname();
     const [visible, setVisible] = useState(true);
     const [contactsVisible, setContactsVisible] = useState(true);

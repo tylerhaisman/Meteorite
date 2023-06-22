@@ -405,7 +405,7 @@ const Chat = () => {
             {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
-                {viewportWidth < 900 && <Header toggleRecentsPressed={toggleRecentsPressed} />}
+                {viewportWidth < 900 && <Header toggleRecentsPressed={toggleRecentsPressed}/>}
                 <div className="page">
                     {viewportWidth >= 900 && <Sidebar></Sidebar>}
                     <div className="board">
