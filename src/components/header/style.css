@@ -7,9 +7,9 @@
 
 .header .buttons{
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 .hamburger{
@@ -23,7 +23,8 @@
     position: relative;
 }
 .hamburger .menu img{
-    width: 30px;
+    width: 40px;
+    height: 40px;    
 }
 
 .hamburger .menu .checkbox-label {
@@ -33,7 +34,7 @@
 }
 
 .hamburger .menu .checkbox-image {
-    width: 30px;
+    width: 40px;
     display: flex;
     align-items: center;
 }

@@ -37,6 +37,7 @@ const Chat = () => {
     const [lastName, setLastName] = useState("");
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [lastUsername, setLastUsername] = useState("");
+    const [recentsIsPressed, setRecentsIsPressed] = useState(false);
 
     const [viewportWidth, setViewportWidth] = useState<number>(0);
 
@@ -64,6 +65,10 @@ const Chat = () => {
     //     await sendMessage();
     //     setMessage("");
     // };
+
+    const toggleRecentsPressed = () => {
+        setRecentsIsPressed((prevState) => !prevState);
+      };
 
     const handleSendMessage = async () => {
         if (message != "") {
@@ -350,6 +355,16 @@ const Chat = () => {
         }
     };
 
+    function showInterface(){
+        if(viewportWidth >= 900){
+            return true;
+        }
+        else if(!recentsIsPressed){
+            return true;
+        }
+        return false;
+    }
+
     useEffect(() => {
         const readMessages = async () => {
             await setMessagesRead();
@@ -390,11 +405,11 @@ const Chat = () => {
             {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
-                {viewportWidth < 900 && <Header></Header>}
+                {viewportWidth < 900 && <Header toggleRecentsPressed={toggleRecentsPressed} />}
                 <div className="page">
                     {viewportWidth >= 900 && <Sidebar></Sidebar>}
                     <div className="board">
-                        <div className="interface">
+                        {showInterface() && <div className="interface">
                             {withUsername != "" && sortedMessages.length == 0 && currentUsername == withUsername && <div className="chatarea">
                                 <div className="nocontact">
                                     <h1 className="quiet">Welcome to your workspace.</h1>
@@ -436,9 +451,36 @@ const Chat = () => {
                                     <p>Learn how to use Meteorite</p><Image src={Arrow2} alt="Arrow right" width={25} height={25}></Image>
                                 </div></Link>
                             </div>}
-                        </div>
+                        </div>}
                         {viewportWidth >= 900 && <hr />}
                         {viewportWidth >= 900 && <div className="recents">
+                            <div className="top">
+                                <form className="searchbar" onSubmit={handleSearchSubmit}>
+                                    <input placeholder="Add username" onChange={handleSearchInputChange} value={searchValue} ref={searchInputRef}></input>
+                                    <button><Image src={Plus} alt="Send" width={20} height={20}></Image></button>
+                                </form>
+                            </div>
+                            <div className="middle">
+                                <h1>Recents</h1>
+                                {sortedRecents.length > 0 && <ul className="people">
+                                    {printRecents}
+                                </ul>}
+                                {sortedRecents.length == 0 && <p>No recents.</p>}
+                            </div>
+                            <div className="bottom">
+                                <button className="newchat" onClick={() => searchInputRef.current?.focus()}>
+                                    New Chat <Image src={Plus} alt="Send" width={20} height={20} />
+                                </button>
+                                <div className="profile">
+                                    <Image src={Profile} alt="Your profile picture" width={40} height={40}></Image>
+                                    <div className="name">
+                                        <h2>{firstName} {lastName}</h2>
+                                        <p>@{currentUsername}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>}
+                        {viewportWidth < 900 && recentsIsPressed && <div className="recents mobile">
                             <div className="top">
                                 <form className="searchbar" onSubmit={handleSearchSubmit}>
                                     <input placeholder="Add username" onChange={handleSearchInputChange} value={searchValue} ref={searchInputRef}></input>

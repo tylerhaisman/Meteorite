@@ -2,14 +2,17 @@ import React, {useState} from "react";
 import "./style.css";
 import Logo from "../logo/Logo";
 import Image from "next/image";
-import HamburgerImg from "../../assets/images/hamburger.png";
+import HamburgerImg from "../../assets/icons/menu.svg";
 import Link from "next/link";
 import Contacts from "../../assets/icons/contacts.svg";
 import { useRouter, usePathname } from 'next/navigation'
 import { signOut } from "next-auth/react";
 
+interface HeaderProps {
+    toggleRecentsPressed: () => void;
+  }
 
-const Header = () => {
+const Header: React.FC<HeaderProps> = ({ toggleRecentsPressed }) => {
     const pathname = usePathname();
     const [visible, setVisible] = useState(true);
     const [contactsVisible, setContactsVisible] = useState(true);
@@ -18,26 +21,26 @@ const Header = () => {
         setVisible(!visible); // Toggle the visibility state
     };
 
-    const handleContactsBoxChange = () => {
-        setContactsVisible(!contactsVisible); // Toggle the visibility state
-    };
+    // const handleContactsBoxChange = () => {
+    //     setContactsVisible(!contactsVisible); // Toggle the visibility state
+
+    // };
+
+    const handleRecentsButtonClick = () => {
+        toggleRecentsPressed();
+      };
 
     return ( 
         <div className="header">
             <Logo></Logo>
             <div className="buttons">
-                {pathname === "/chat" && <div className="hamburger">
+                {pathname === "/chat" && <div className="hamburger recent">
                 <div className="menu">
-                    <input type="checkbox" onChange={handleContactsBoxChange} />
+                    <input type="checkbox" onChange={handleRecentsButtonClick} />
                     <label className="checkbox-label">
                     <Image src={Contacts} alt="Show contacts menu" width={34} height={34}></Image>
                     </label>
                 </div>
-                {!contactsVisible && (
-                    <div className="recents">
-                        {/* TOGGLE RECENTS DIV HERE */}
-                    </div>
-                )}
                 </div>}
             <div className="hamburger">
                 <div className="menu">

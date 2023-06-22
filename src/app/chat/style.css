@@ -203,6 +203,10 @@
     gap: 10px;
 }
 
+.chat .page .recents.mobile {
+    width: 100%;
+}
+
 .chat .page .recents input {
     background-color: #ffffff96;
     border: 1px solid #1f1f1f25;
@@ -317,17 +321,14 @@
     font-family: h1;
 }
 
-/* width */
 .board ::-webkit-scrollbar {
     width: 8px;
   }
   
-  /* Track */
   .board ::-webkit-scrollbar-track {
     background: transparent;
   }
   
-  /* Handle */
   .board ::-webkit-scrollbar-thumb {
     background: #1f1f1f25;
     border-radius: 10px;

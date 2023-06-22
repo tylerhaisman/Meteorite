@@ -26,10 +26,12 @@ h1{
   font-family: h1;
   font-size: 40px;
   line-height: 50px;
+  font-weight: 700;
 }
 p{
   font-size: 18px;
   line-height: 20px;
+  font-weight: 400;
 }
 button{
   font-family: p;

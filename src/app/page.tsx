@@ -51,7 +51,7 @@ export default function Home() {
             <Link href="/chat"><button>Get Started with Meteorite <Image src={Arrow} alt="arrow pointing right" width={20} height={20}></Image></button></Link>
           </div>
           <div className="image">
-            <Image src={Planet} alt="Image of another planet" width={700} height={700}></Image>
+            <Image src={Planet} alt="Image of another planet" width={650} height={650}></Image>
           </div>
         </div>
       </div>
