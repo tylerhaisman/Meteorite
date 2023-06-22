@@ -97,6 +97,10 @@ const Account = () => {
     //     }
     // }
 
+    const toggleRecentsPressed = () => {
+        //N/A
+      };
+
     useEffect(() => {
         const fetch = async () => {
             if (session) {
@@ -122,7 +126,7 @@ const Account = () => {
             {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
-                {viewportWidth < 900 && <Header></Header>}
+                {viewportWidth < 900 && <Header toggleRecentsPressed={toggleRecentsPressed}></Header>}
                 <div className="page">
                 {viewportWidth >= 900 && <Sidebar></Sidebar>}
                     <div className="board">
