@@ -12,8 +12,7 @@ Meteorite Messenger is an instant messaging platform designed to connect you wit
 ## How to use Meteorite Messenger
 1. First, click on the "Get Started with Meteorite" button.
 2. Create an account and sign in.
-3. Add users to chat with.
-  * Add me! My username is "tylerhaisman"
+3. Add users to chat with. _Add me! My username is "tylerhaisman"_
 4. Start sending messages!
 ## Tech stack
 ### Languages
