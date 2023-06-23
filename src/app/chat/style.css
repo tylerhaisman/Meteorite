@@ -1,5 +1,6 @@
 .chat {
-    background: radial-gradient(circle at top left, #4f67c8, #434e9e20);
+    /* background: radial-gradient(circle at top left, #4f67c8, #434e9e20); */
+    background: linear-gradient(#4f67c8, #344896d0);
     overflow: hidden;
     min-height: 100vh;
 }
@@ -58,11 +59,11 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .chat .page .interface .nocontact h1{
     margin-bottom: 30px;
-    margin-left: 40px;
-    margin-right: 40px;
 }
 .chat .page .interface .nocontact .quiet{
     margin-bottom: 0;

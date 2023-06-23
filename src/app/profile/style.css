@@ -1,5 +1,5 @@
 .account {
-    background: radial-gradient(circle at top left, #4f67c8, #434e9e20);
+    background: linear-gradient(#4f67c8, #344896d0);
     overflow: hidden;
     min-height: 100vh;
 }
