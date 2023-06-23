@@ -4,9 +4,11 @@ const bcrypt = require("bcrypt");
 // import bcrypt from "bcrypt";
 const { v4: uuidv4 } = require('uuid');
 import User from "./models/user";
-import forge from 'node-forge';
 const crypto = require('crypto');
-const encryptionKey = process.env.ENCRYPTION_KEY;
+// const encryptionKey = process.env.ENCRYPTION_KEY;
+const ALGO = process.env.ALGO;
+const ENC = process.env.ENC;
+const IV = process.env.IV;
 
 export async function createTables() {
   const db = Database.getInstance();
@@ -198,6 +200,9 @@ export async function addUser(
 }
 
 export async function getMessages(email: string, withUsername: string) {
+  if (!ALGO || !ENC || !IV) {
+    throw new Error('Missing environment variables: ALGO, ENC, IV');
+  }
   const db = Database.getInstance();
   const client = db.getPool();
   try {
@@ -216,7 +221,7 @@ export async function getMessages(email: string, withUsername: string) {
       const filteredMessages = messages.filter((message) => (message.from === withUsername) || (message.to === withUsername));
       const decryptedMessages = filteredMessages.map((message) => ({
         ...message,
-        content: decryptMessage(message.content, encryptionKey),
+        content: decrypt(message.content, ENC, IV),
       }));
       return decryptedMessages;
     }
@@ -334,7 +339,7 @@ export async function sendMessage(email: string, withUsername: string, message: 
       username = results.rows[0].username;
       const timestamp = new Date().toString();
 
-      const encryptedMessage = encryptMessage(message, encryptionKey);
+      const encryptedMessage = encrypt(message).encrypted;
 
       userMessages.push({
         from: username,
@@ -358,7 +363,7 @@ export async function sendMessage(email: string, withUsername: string, message: 
           otherUserMessages = results.rows[0].messages;
           // Adding user message and timestamp to the other user's conversation array
 
-          const otherEncryptedMessage = encryptMessage(message, encryptionKey);
+          const otherEncryptedMessage = encrypt(message).encrypted;
 
           otherUserMessages.push({
             from: username,
@@ -430,42 +435,54 @@ export async function sendMessage(email: string, withUsername: string, message: 
   }
 }
 
-// const algorithm = process.env.ALGORITHM;
-// const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
-// const IV_LENGTH = parseInt(process.env.IV_LENGTH || "16");
+const encrypt = (text: string) => {
+  if (!ALGO || !ENC || !IV) {
+    throw new Error('Missing environment variables: ALGO, ENC, IV');
+  }
+  let cipher = crypto.createCipheriv(ALGO, Buffer.from(ENC, 'hex'), Buffer.from(IV, 'hex'));
+  let encrypted = cipher.update(text, "utf8", "base64");
+  encrypted += cipher.final("base64");
+  return {
+    encrypted: encrypted,
+    ENC: ENC,
+    IV: IV
+  };
+};
+
+const decrypt = (text: string, ENC: string, IV: string) => {
+  let decipher = crypto.createDecipheriv(ALGO, Buffer.from(ENC, 'hex'), Buffer.from(IV, 'hex'));
+  let decrypted = decipher.update(text, "base64", "utf8");
+  decrypted += decipher.final("utf8");
+  return decrypted;
+};
+
+// const encrypted_key = encrypt("HelloWorld");
+// const decrypted_key = decrypt(encrypted_key.encrypted, encrypted_key.ENC, encrypted_key.IV);
+// console.log(encrypted_key.encrypted);
+// console.log(decrypted_key);
+
+
+// console.log(encrypted_key.encrypted);
+// console.log(decrypted_key);
+
+
+
+
+
+
+
+
 
 // function encryptMessage(message: string, key: string | undefined) {
-//   const iv = crypto.randomBytes(IV_LENGTH);
-//   const cipher = crypto.createCipheriv(algorithm, Buffer.from(key || (ENCRYPTION_KEY || "gasfojbwewr408!0083&&*")), iv);
+//   const cipher = crypto.createCipher('aes-256-cbc', key);
 //   let encrypted = cipher.update(message, 'utf8', 'hex');
 //   encrypted += cipher.final('hex');
-//   return iv.toString('hex') + ':' + encrypted;
+//   return encrypted;
 // }
 
 // function decryptMessage(encryptedMessage: string, key: string | undefined) {
-//   const textParts = encryptedMessage.split(':');
-//   const iv = Buffer.from(textParts.shift() || '', 'hex');
-//   const encryptedText = Buffer.from(textParts.join(':'), 'hex');
-//   const decipher = crypto.createDecipheriv(algorithm, Buffer.from(key || (ENCRYPTION_KEY || "gasfojbwewr408!0083&&*")), iv);
-//   let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+//   const decipher = crypto.createDecipher('aes-256-cbc', key);
+//   let decrypted = decipher.update(encryptedMessage, 'hex', 'utf8');
 //   decrypted += decipher.final('utf8');
 //   return decrypted;
 // }
-
-
-
-
-
-function encryptMessage(message: string, key: string | undefined) {
-  const cipher = crypto.createCipher('aes-256-cbc', key);
-  let encrypted = cipher.update(message, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return encrypted;
-}
-
-function decryptMessage(encryptedMessage: string, key: string | undefined) {
-  const decipher = crypto.createDecipher('aes-256-cbc', key);
-  let decrypted = decipher.update(encryptedMessage, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
-}
