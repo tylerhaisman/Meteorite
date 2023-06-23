@@ -47,7 +47,6 @@
 .chat .page .interface {
     position: relative;
     width: 100%;
-    overflow: hidden;
     z-index: 1;
 }
 
@@ -97,7 +96,6 @@
     bottom: 0;
     right: 0;
     z-index: 1;
-    overflow: hidden;
 }
 
 .chat .page .mobilebar{
