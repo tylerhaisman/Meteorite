@@ -30,6 +30,13 @@
     margin-bottom: 50px;
 }
 
+@media(max-width: 400px){
+    .auth .authcontent .box {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
 .auth .authcontent .box form {
     display: flex;
     flex-direction: column;

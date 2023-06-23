@@ -89,6 +89,7 @@ const Chat = () => {
             setWithUsername(username);
             await setMessagesRead();
         }
+        setRecentsIsPressed(false);
     };
 
 

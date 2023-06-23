@@ -21,6 +21,7 @@
     position: relative;
     z-index: 1;
     gap: 30px;
+    padding-bottom: 50px;
 }
 
 .home .cover .title {

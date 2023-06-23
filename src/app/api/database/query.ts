@@ -1,11 +1,8 @@
-// const client = require("../database/connection");
 import Database from './connection';
 const bcrypt = require("bcrypt");
-// import bcrypt from "bcrypt";
 const { v4: uuidv4 } = require('uuid');
 import User from "./models/user";
 const crypto = require('crypto');
-// const encryptionKey = process.env.ENCRYPTION_KEY;
 const ALGO = process.env.ALGO;
 const ENC = process.env.ENC;
 const IV = process.env.IV;
@@ -455,34 +452,3 @@ const decrypt = (text: string, ENC: string, IV: string) => {
   decrypted += decipher.final("utf8");
   return decrypted;
 };
-
-// const encrypted_key = encrypt("HelloWorld");
-// const decrypted_key = decrypt(encrypted_key.encrypted, encrypted_key.ENC, encrypted_key.IV);
-// console.log(encrypted_key.encrypted);
-// console.log(decrypted_key);
-
-
-// console.log(encrypted_key.encrypted);
-// console.log(decrypted_key);
-
-
-
-
-
-
-
-
-
-// function encryptMessage(message: string, key: string | undefined) {
-//   const cipher = crypto.createCipher('aes-256-cbc', key);
-//   let encrypted = cipher.update(message, 'utf8', 'hex');
-//   encrypted += cipher.final('hex');
-//   return encrypted;
-// }
-
-// function decryptMessage(encryptedMessage: string, key: string | undefined) {
-//   const decipher = crypto.createDecipher('aes-256-cbc', key);
-//   let decrypted = decipher.update(encryptedMessage, 'hex', 'utf8');
-//   decrypted += decipher.final('utf8');
-//   return decrypted;
-// }
