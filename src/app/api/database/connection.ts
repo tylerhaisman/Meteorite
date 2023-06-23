@@ -31,21 +31,3 @@ class Database {
 }
 
 export default Database;
-
-
-
-
-// require('dotenv').config();
-// const { Pool } = require('pg');
-// const connectionString = process.env.DATABASE_URL;
-
-// // Creating a connection
-// const pool = new Pool({ connectionString });
-// pool.connect((error: string) => {
-//   if (error) {
-//     return error;
-//   }
-//   console.log("Connected to database!")
-// })
-
-// module.exports = pool;

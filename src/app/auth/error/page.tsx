@@ -4,7 +4,7 @@ const Error = () => {
 
     return (
         <div className="auth">
-            error
+            A server error occured.
         </div>
     );
 }

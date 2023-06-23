@@ -1,11 +1,11 @@
 "use client"
+
 import React, { useEffect, useState, FormEvent, useRef } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { Toast, toast, Toaster } from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { toast, Toaster } from "react-hot-toast";
 import Logo from "@/components/logo/Logo";
 import Link from "next/link";
 import "../style.css";
-import Circle from "@/components/cirlce/Circle";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
@@ -19,16 +19,6 @@ const Login = () => {
     const password = useRef("");
 
     const router = useRouter();
-
-    // const handleSignIn = async (e: FormEvent) => {
-    //     e.preventDefault();
-    //     const result = await signIn("credentials", {
-    //         email: email.current,
-    //         password: password.current,
-    //         redirect: true,
-    //         callbackUrl: "/chat",
-    //     })
-    // }
 
     const handleSignIn = async (e: FormEvent) => {
         e.preventDefault();
@@ -84,7 +74,6 @@ const Login = () => {
     if (!mounted) return <></>;
     return (
         <div className="auth">
-            {/* <Circle></Circle> */}
             <div className="content">
                 <Logo></Logo>
                 <Toaster></Toaster>

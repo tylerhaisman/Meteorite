@@ -5,19 +5,13 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 import "./style.css";
-import Arrow from "../../assets/icons/arrow3.svg"
-import Arrow2 from "../../assets/icons/arrow4.svg"
-// import Messages from "@/components/messages/Messages";
 import { useSession, getSession, signOut } from "next-auth/react"
 import Loader from "@/components/loader/Loader";
-import Circle from "@/components/cirlce/Circle";
 import { useRouter } from "next/navigation";
-import Plus from "../../assets/icons/plus.svg"
 import Profile from "../../assets/images/profile.png"
 import Header from "@/components/header/Header";
 
 const Account = () => {
-    //rendering hooks
     const router = useRouter();
     const [currentUsername, setCurrentUsername] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -29,14 +23,8 @@ const Account = () => {
       const handleResize = () => {
         setViewportWidth(window.innerWidth);
       };
-  
-      // Initial width on component mount
       setViewportWidth(window.innerWidth);
-  
-      // Add event listener to update width on resize
       window.addEventListener("resize", handleResize);
-  
-      // Clean up the event listener on component unmount
       return () => {
         window.removeEventListener("resize", handleResize);
       };
@@ -70,6 +58,8 @@ const Account = () => {
         }
     };
 
+    //TODO: CHANGE PASSWORD SEPARATE PAGE AND FUNCTION
+
     // const handleChangePassword = async () => {
     //     try {
     //         const response = await fetch('/api/database', {
@@ -98,7 +88,7 @@ const Account = () => {
     // }
 
     const toggleRecentsPressed = () => {
-        //N/A
+        // N/A
       };
 
     useEffect(() => {
@@ -123,7 +113,6 @@ const Account = () => {
     }
     return (
         <div className="account">
-            {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
                 {viewportWidth < 900 && <Header toggleRecentsPressed={toggleRecentsPressed}></Header>}

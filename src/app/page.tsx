@@ -1,12 +1,11 @@
 "use client"
+
 import "./style.css";
 import React, { useEffect, FormEvent } from "react";
-import Header from "../components/header/Header"
 import Image from "next/image";
 import Planet from "../assets/images/planet.png"
 import Arrow from "../assets/images/arrow.png"
 import Link from "next/link";
-import Circle from "@/components/cirlce/Circle";
 import Logo from "@/components/logo/Logo";
 
 export default function Home() {
@@ -41,7 +40,6 @@ export default function Home() {
 };
   return (
     <div className="home">
-      {/* <Circle></Circle> */}
       <div className="content">
         <Logo></Logo>
         <div className="cover">

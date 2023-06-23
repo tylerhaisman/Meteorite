@@ -1,10 +1,9 @@
 "use client"
 import React, { useEffect, useState, FormEvent, useRef } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { Toast, toast, Toaster } from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { toast, Toaster } from "react-hot-toast";
 import Logo from "@/components/logo/Logo";
 import Link from "next/link";
-import Circle from "@/components/cirlce/Circle";
 import "../style.css";
 import { useRouter } from "next/navigation";
 
@@ -22,22 +21,6 @@ const Register = () => {
   const username = useRef("");
 
   const router = useRouter();
-
-  // const handleSignIn = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   const response = await addUser();
-  //   if (response.message == "User already exists! Please sign in.") {
-  //     toast.error(response.message);
-  //     return;
-  //   }
-  //   toast.loading("Signing you in...");
-  //   const result = await signIn("credentials", {
-  //     email: email.current,
-  //     password: password.current,
-  //     redirect: true,
-  //     callbackUrl: "/chat"
-  //   })
-  // }
 
   const handleSignIn = async (e: FormEvent) => {
     e.preventDefault();

@@ -1,12 +1,5 @@
 .home {
-    /* background: radial-gradient(at bottom right, #924fff2c, #111111); */
-    /* background: linear-gradient(#1f1f1f, #2b4e8052); */
-
-    /* background: linear-gradient(#914dff7c, #2b4e8052); */
-    /* background: radial-gradient(circle at top left, #5555d3, #350e72); */
-    /* background: radial-gradient(circle at top left, #4f67c8, #434e9e20); */
     background: linear-gradient(#4f67c8, #344896d0);
-
     overflow: hidden;
     min-height: 100vh;
 }
@@ -48,7 +41,6 @@
 
 .home .cover .title button {
     margin-top: 60px;
-    /* box-shadow: 0 0 20px #11111143; */
     position: relative;
     z-index: 2;
 }
@@ -60,8 +52,17 @@
 
 .home .cover .image img {
     rotate: 20deg;
-    animation: floating 3s ease-in-out infinite;
+    animation: floating 3s ease-in-out infinite, rotation 100s infinite linear;
     transition: 4s;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .home .cover .image img:hover {

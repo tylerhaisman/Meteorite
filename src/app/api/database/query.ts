@@ -358,8 +358,8 @@ export async function sendMessage(email: string, withUsername: string, message: 
         try {
           const results = await client.query('SELECT messages FROM messagedata WHERE username = $1', [withUsername]);
           otherUserMessages = results.rows[0].messages;
+          
           // Adding user message and timestamp to the other user's conversation array
-
           const otherEncryptedMessage = encrypt(message).encrypted;
 
           otherUserMessages.push({
@@ -377,6 +377,7 @@ export async function sendMessage(email: string, withUsername: string, message: 
           return error;
         }
       }
+
       // Add user to the contacts list
       if (recents.findIndex(recent => recent.username === withUsername) === -1) {
         try {
@@ -419,8 +420,6 @@ export async function sendMessage(email: string, withUsername: string, message: 
         console.error(error);
         return error;
       }
-
-      // Send the completion response to the client
       return "Success";
 
     } catch (error) {

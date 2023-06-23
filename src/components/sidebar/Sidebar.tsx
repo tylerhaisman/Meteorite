@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Image from "next/image";
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import "./style.css";
-import Profile from "../../assets/images/profile.png";
 import Logo from "../logo/Logo";
 import ChatIcon from "../../assets/icons/chat.svg"
 import AccountIcon from "../../assets/icons/account.svg"

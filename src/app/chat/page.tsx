@@ -7,10 +7,8 @@ import toast, { Toaster } from "react-hot-toast";
 import "./style.css";
 import Arrow from "../../assets/icons/arrow3.svg"
 import Arrow2 from "../../assets/icons/arrow4.svg"
-// import Messages from "@/components/messages/Messages";
 import { useSession, getSession } from "next-auth/react"
 import Loader from "@/components/loader/Loader";
-import Circle from "@/components/cirlce/Circle";
 import { useRouter } from "next/navigation";
 import ToMessage from "@/components/messages/ToMessage";
 import FromMessage from "@/components/messages/FromMessage";
@@ -18,7 +16,6 @@ import Plus from "../../assets/icons/plus.svg"
 import Profile from "../../assets/images/profile.png"
 import Link from "next/link";
 import Header from "@/components/header/Header";
-import { read } from "fs";
 
 
 type User = {
@@ -61,11 +58,6 @@ const Chat = () => {
     //checking for authentication
     const { data: session, status } = useSession();
 
-    // const handleSendMessage = async () => {
-    //     await sendMessage();
-    //     setMessage("");
-    // };
-
     const toggleRecentsPressed = () => {
         setRecentsIsPressed((prevState) => !prevState);
       };
@@ -91,9 +83,6 @@ const Chat = () => {
         }
         setRecentsIsPressed(false);
     };
-
-
-
 
     const handleFormSubmit = async (event: FormEvent) => {
         event.preventDefault();
@@ -292,13 +281,10 @@ const Chat = () => {
             clearInterval(pollingIntervalId);
         }
 
-        // Show loading toast
         const loadingToast = toast.loading("Loading messages...");
 
         const intervalId = setInterval(async () => {
             await pollForNewMessages();
-
-            // Remove loading toast after messages are updated
             toast.dismiss(loadingToast);
         }, 1000);
 
@@ -403,7 +389,6 @@ const Chat = () => {
     }
     return (
         <div className="chat">
-            {/* <Circle></Circle> */}
             <div className="content">
                 <Toaster></Toaster>
                 {viewportWidth < 900 && <Header toggleRecentsPressed={toggleRecentsPressed}/>}

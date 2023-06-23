@@ -1,5 +1,4 @@
 .chat {
-    /* background: radial-gradient(circle at top left, #4f67c8, #434e9e20); */
     background: linear-gradient(#4f67c8, #344896d0);
     overflow: hidden;
     min-height: 100vh;
@@ -12,16 +11,6 @@
 }
 
 .chat .page .board {
-    /* position: relative;
-    z-index: 1;
-    display: flex;
-    height: calc(100vh - 40px);
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    background-color: #ffffffe8;
-    border-radius: 20px; */
     position: relative;
     z-index: 1;
     display: flex;

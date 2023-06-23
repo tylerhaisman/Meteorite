@@ -5,7 +5,7 @@ import Image from "next/image";
 import HamburgerImg from "../../assets/icons/menu.svg";
 import Link from "next/link";
 import Contacts from "../../assets/icons/contacts.svg";
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { signOut } from "next-auth/react";
 
 interface HeaderProps {
@@ -15,16 +15,10 @@ interface HeaderProps {
 const Header= ({ toggleRecentsPressed }: HeaderProps) => {
     const pathname = usePathname();
     const [visible, setVisible] = useState(true);
-    const [contactsVisible, setContactsVisible] = useState(true);
 
     const handleCheckboxChange = () => {
-        setVisible(!visible); // Toggle the visibility state
+        setVisible(!visible);
     };
-
-    // const handleContactsBoxChange = () => {
-    //     setContactsVisible(!contactsVisible); // Toggle the visibility state
-
-    // };
 
     const handleRecentsButtonClick = () => {
         toggleRecentsPressed();
