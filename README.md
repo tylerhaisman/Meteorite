@@ -41,10 +41,6 @@ Meteorite Messenger is an instant messaging platform designed to connect you wit
   - Description: TypeScript definitions for Node.js.
   - Usage: Type definitions for Node.js modules.
 
-- [@types/node-forge](https://www.npmjs.com/package/@types/node-forge): [^1.3.2](https://www.npmjs.com/package/@types/node-forge)
-  - Description: TypeScript definitions for Node.js Forge.
-  - Usage: Type definitions for Node.js cryptographic library.
-
 - [@types/react](https://www.npmjs.com/package/@types/react): [18.2.12](https://www.npmjs.com/package/@types/react)
   - Description: TypeScript definitions for React.
   - Usage: Type definitions for React components and APIs.
