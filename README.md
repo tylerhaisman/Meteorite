@@ -21,7 +21,7 @@ Meteorite Messenger is an instant messaging platform designed to connect you wit
 * SQL
 * TSX (JSX)
 * CSS
-### Frameworks/Libraries
+### Most Relevant Frameworks/Libraries
 * Next.js
 * React JS
 * NextAuth.js
@@ -32,70 +32,75 @@ Meteorite Messenger is an instant messaging platform designed to connect you wit
 * Git/Github
 * yarn
 ## Project Dependencies
-- @types/node: [20.3.1](https://www.npmjs.com/package/@types/node)
+# Dependencies
+- [@types/bcrypt](https://www.npmjs.com/package/@types/bcrypt): [^5.0.0](https://www.npmjs.com/package/@types/bcrypt)
+  - Description: TypeScript definitions for bcrypt.
+  - Usage: Type definitions for bcrypt functions.
+
+- [@types/node](https://www.npmjs.com/package/@types/node): [20.3.1](https://www.npmjs.com/package/@types/node)
   - Description: TypeScript definitions for Node.js.
   - Usage: Type definitions for Node.js modules.
 
-- @types/react: [18.2.12](https://www.npmjs.com/package/@types/react)
+- [@types/node-forge](https://www.npmjs.com/package/@types/node-forge): [^1.3.2](https://www.npmjs.com/package/@types/node-forge)
+  - Description: TypeScript definitions for Node.js Forge.
+  - Usage: Type definitions for Node.js cryptographic library.
+
+- [@types/react](https://www.npmjs.com/package/@types/react): [18.2.12](https://www.npmjs.com/package/@types/react)
   - Description: TypeScript definitions for React.
   - Usage: Type definitions for React components and APIs.
 
-- @types/react-dom: [18.2.5](https://www.npmjs.com/package/@types/react-dom)
+- [@types/react-dom](https://www.npmjs.com/package/@types/react-dom): [18.2.5](https://www.npmjs.com/package/@types/react-dom)
   - Description: TypeScript definitions for React DOM.
   - Usage: Type definitions for React DOM-related APIs.
 
-- bcrypt: [5.1.0](https://www.npmjs.com/package/bcrypt)
+- [bcrypt](https://www.npmjs.com/package/bcrypt): [^5.1.0](https://www.npmjs.com/package/bcrypt)
   - Description: A library to help you hash passwords.
   - Usage: Securely hash passwords for authentication purposes.
 
-- crypto: [1.0.1](https://www.npmjs.com/package/crypto)
+- [crypto](https://www.npmjs.com/package/crypto): [^1.0.1](https://www.npmjs.com/package/crypto)
   - Description: A collection of cryptographic modules.
   - Usage: Perform cryptographic operations like generating hashes or encrypting data.
 
-- dotenv: [16.3.0](https://www.npmjs.com/package/dotenv)
+- [dotenv](https://www.npmjs.com/package/dotenv): [^16.3.0](https://www.npmjs.com/package/dotenv)
   - Description: Loads environment variables from a .env file.
   - Usage: Configure environment-specific settings using a .env file.
 
-- eslint: [8.42.0](https://www.npmjs.com/package/eslint)
+- [eslint](https://www.npmjs.com/package/eslint): [8.42.0](https://www.npmjs.com/package/eslint)
   - Description: A pluggable JavaScript linter.
   - Usage: Enforce coding style and catch common programming errors.
 
-- eslint-config-next: [13.4.6](https://www.npmjs.com/package/eslint-config-next)
+- [eslint-config-next](https://www.npmjs.com/package/eslint-config-next): [13.4.6](https://www.npmjs.com/package/eslint-config-next)
   - Description: ESLint configuration for Next.js projects.
   - Usage: Configure ESLint rules specific to Next.js applications.
 
-- next: [13.4.6](https://www.npmjs.com/package/next)
+- [next](https://www.npmjs.com/package/next): [13.4.6](https://www.npmjs.com/package/next)
   - Description: The Next.js framework for building web applications.
   - Usage: Develop server-side rendered or static websites using Next.js.
 
-- next-auth: [4.22.1](https://www.npmjs.com/package/next-auth)
+- [next-auth](https://www.npmjs.com/package/next-auth): [^4.22.1](https://www.npmjs.com/package/next-auth)
   - Description: Authentication library for Next.js applications.
   - Usage: Add authentication and authorization functionality to your Next.js app.
 
-- pg: [8.11.0](https://www.npmjs.com/package/pg)
+- [pg](https://www.npmjs.com/package/pg): [^8.11.0](https://www.npmjs.com/package/pg)
   - Description: PostgreSQL client for Node.js.
   - Usage: Interact with PostgreSQL databases from your Node.js application.
 
-- react: [18.2.0](https://www.npmjs.com/package/react)
+- [react](https://www.npmjs.com/package/react): [18.2.0](https://www.npmjs.com/package/react)
   - Description: A JavaScript library for building user interfaces.
   - Usage: Develop the UI components of your application using React.
 
-- react-dom: [18.2.0](https://www.npmjs.com/package/react-dom)
+- [react-dom](https://www.npmjs.com/package/react-dom): [18.2.0](https://www.npmjs.com/package/react-dom)
   - Description: React package for working with the DOM.
   - Usage: Render React components to the DOM.
 
-- react-hot-toast: [2.4.1](https://www.npmjs.com/package/react-hot-toast)
+- [react-hot-toast](https://www.npmjs.com/package/react-hot-toast): [^2.4.1](https://www.npmjs.com/package/react-hot-toast)
   - Description: A customizable toast notification library for React.
   - Usage: Display informative or error messages to the user.
 
-- salt: [0.5.5](https://www.npmjs.com/package/salt)
-  - Description: A password-hashing function.
-  - Usage: Generate secure and unique salts for password hashing.
-
-- typescript: [5.1.3](https://www.npmjs.com/package/typescript)
+- [typescript](https://www.npmjs.com/package/typescript): [5.1.3](https://www.npmjs.com/package/typescript)
   - Description: A superset of JavaScript that adds static typing.
   - Usage: Write type-safe code and compile it to JavaScript.
 
-- uuid: [9.0.0](https://www.npmjs.com/package/uuid)
+- [uuid](https://www.npmjs.com/package/uuid): [^9.0.0](https://www.npmjs.com/package/uuid)
   - Description: Generate universally unique identifiers (UUIDs).
   - Usage: Create unique identifiers for various purposes.

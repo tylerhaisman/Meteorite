@@ -1118,11 +1118,6 @@ gauge@^3.0.0:
     strip-ansi "^6.0.1"
     wide-align "^1.1.2"
 
-genData@~3.1:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/genData/-/genData-3.1.0.tgz"
-  integrity sha512-rdUS7F0ORqPtTMz5y9zEvcpwJaTlFWlw9qlAwOSa3bPshqGArg+0JJz7tfSmvBrz7pcYkJ0EFwO6Ky4+y6p9Dg==
-
 get-intrinsic@^1.0.2, get-intrinsic@^1.1.1, get-intrinsic@^1.1.3, get-intrinsic@^1.2.0:
   version "1.2.1"
   resolved "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.2.1.tgz"
@@ -1758,11 +1753,6 @@ node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-forge@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-1.3.1.tgz#be8da2af243b2417d5f646a770663a92b7e9ded3"
-  integrity sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==
-
 nopt@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/nopt/-/nopt-5.0.0.tgz"
@@ -1945,13 +1935,6 @@ packet-reader@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/packet-reader/-/packet-reader-1.0.0.tgz"
   integrity sha512-HAKu/fG3HpHFO0AA8WE8q2g+gBJaZ9MG7fcKk+IJPLTGAD6Psw4443l+9DGRbOIh3/aXr7Phy0TjilYivJo5XQ==
-
-panzer@~0.3:
-  version "0.3.13"
-  resolved "https://registry.npmjs.org/panzer/-/panzer-0.3.13.tgz"
-  integrity sha512-1sT4zlVEugArsws/O1/4vjKGnQjIdMCZSulZn2zbjtDeCzSGWDhLH5A9cg1KF3GJqPRtOKOH8mkbrtcKSTQxsA==
-  dependencies:
-    genData "~3.1"
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -2190,11 +2173,6 @@ react-hot-toast@^2.4.1:
   dependencies:
     goober "^2.1.10"
 
-react-intersection-observer@^9.5.1:
-  version "9.5.1"
-  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.5.1.tgz#63a6d7c45f7251610ad2f5a5abb85204ee0926ac"
-  integrity sha512-YwcNF/4WsMAG1rLVDQHSbpdEW9vDaIl4QW88d+vqeXNUewFV4AJDQB14oHpAJ3rRCnKRmwu3nqfwwYe6wioNIg==
-
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -2297,13 +2275,6 @@ safe-regex-test@^1.0.0:
     call-bind "^1.0.2"
     get-intrinsic "^1.1.3"
     is-regex "^1.1.4"
-
-salt@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.npmjs.org/salt/-/salt-0.5.5.tgz"
-  integrity sha512-sBa9JkxlQAZjTjMFtkrySrLqYQboTnZx4balhggHin5CO9CIKGXpMzGB9MUrsohaTXGIoGD6JxDUR+dBca3x/w==
-  dependencies:
-    panzer "~0.3"
 
 scheduler@^0.23.0:
   version "0.23.0"

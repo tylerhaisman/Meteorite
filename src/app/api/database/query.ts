@@ -157,7 +157,7 @@ export async function addUser(
     if (usernames.rows.length > 0) {
       return "Username is already in use";
     }
-    const encryptedPassword = await bcrypt.hash(password, 10); // Generate salt using bcrypt
+    const encryptedPassword = await bcrypt.hash(password, 10);
     const uuid = uuidv4();
 
     const newUser = new User({

@@ -267,7 +267,6 @@ const Chat = () => {
 
     const pollForNewMessages = async () => {
         const messages = await getMessages();
-        console.log(messages);
         setSortedMessages(messages.message);
         const recents = await getRecents();
         setSortedRecents(recents.message);
