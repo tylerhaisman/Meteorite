@@ -35,9 +35,8 @@
 
 @media(max-width: 900px){
     .chat .page .board {
-        position: fixed;
         width: calc(100vw - 40px);
-        height: calc(100vh - 140px);
+        height: calc(100vh - 250px);
     }
 }
 
@@ -99,6 +98,18 @@
     right: 0;
     z-index: 1;
     overflow: hidden;
+}
+
+.chat .page .interface .chatarea .mobilebar{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 115px;
+    background-color: #ffffffba;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    backdrop-filter: blur(10px);
 }
 
 .chat .page .interface .chatarea .messagebar {

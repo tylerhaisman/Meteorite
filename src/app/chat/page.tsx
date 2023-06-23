@@ -435,10 +435,16 @@ const Chat = () => {
                                 <div className="messages">
                                     {printMessages}
                                 </div>
+                                {viewportWidth >= 900 && <form className="messagebar" onSubmit={handleFormSubmit}>
+                                    <textarea onKeyDown={checkKey} placeholder="Start typing..." value={message} onChange={handleTextareaChange}></textarea>
+                                    <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>
+                                </form>}
+                                {viewportWidth < 900 && <div className="mobilebar">
                                 <form className="messagebar" onSubmit={handleFormSubmit}>
                                     <textarea onKeyDown={checkKey} placeholder="Start typing..." value={message} onChange={handleTextareaChange}></textarea>
                                     <button><Image src={Arrow} alt="Send" width={20} height={20}></Image></button>
                                 </form>
+                                    </div>}
                             </div>}
                             {withUsername == "" && <div className="nocontact">
                                 <h1>Nothing to see here!</h1>
