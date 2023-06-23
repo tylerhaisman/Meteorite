@@ -1,4 +1,5 @@
 <img src="./src/app/favicon.ico" alt="Meteorite Messaging Logo" width="100px" height="100px">
+
 # Meteorite Messenger
 Created by [Tyler Haisman](https://tylerhaisman.com)
 Note: This project is a work in progress and some features may be unavailable. Please [contact me](https://tylerhaisman.com) if you have any inquiries or requests.
